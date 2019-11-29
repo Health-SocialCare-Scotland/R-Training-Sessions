@@ -561,9 +561,9 @@ barplot(counts,
 
 If you have questions or need help, you can contact
 
-PHI R User Group Inbox: nss.Rusergroupinbox@nhs.net
+PHI R User Group Inbox: <nss.Rusergroupinbox@nhs.net> (email here to be added to the distribution list)
 
-PHI R User Group Distribution List: nss.rusergp@nhs.net 
+PHI R User Group Distribution List: <nss.rusergp@nhs.net>
 
 
 
