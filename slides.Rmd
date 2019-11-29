@@ -317,7 +317,7 @@ Borders_2 <- mutate(Borders, LOS2 = LengthOfStay/2)
 
 ## Pipe Operator 
 
-While all the dplyr funcitons shown are useful on their own, there are times when we need to use more of them to achieve desired outputs. For this, dplyr contains the pipe operator, %>%. This operator works by linking the dplyr function together
+While all the dplyr functions shown are useful on their own, there are times when we need to use more of them to achieve desired outputs. For this, dplyr contains the pipe operator, %>%. This operator works by linking the dplyr function together
 
 For example 
 
