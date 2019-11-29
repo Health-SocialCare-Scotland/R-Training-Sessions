@@ -284,7 +284,7 @@ Using the Borders data
 Filter the Borders data Specialty = E12
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders_E12<-filter(Borders, Specialty == "E12")
+Borders_E12 <- filter(Borders, Specialty == "E12")
 ```
 
 Filter the Borders data for Hospital is B120H and length of stay greater than 10.  
@@ -292,8 +292,7 @@ Filter the Borders data for Hospital is B120H and length of stay greater than 10
 
 ```{r,  eval=FALSE,echo=TRUE}
 Borders_filtered <- filter(Borders, 
-                           HospitalCode == "B120H" 
-                           & LengthOfStay > 10)
+                           HospitalCode == "B120H" & LengthOfStay > 10)
 
 ```
 
@@ -331,9 +330,9 @@ While all the dplyr functions shown are useful on their own, there are times whe
 For example 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%`
-filter(HospitalCode == "B102H") %>%
-arrange(Dateofbirth)
+Borders %>%
+  filter(HospitalCode == "B102H") %>%
+  arrange(Dateofbirth)
 ```
 
 Note: There is no longer a need for dataframe as the first argument for example:
@@ -362,13 +361,13 @@ Sometimes you will only be interested in a few columns in your dataframe. The se
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-select(df, column name)
+select(df, column_name)
 ```
 
 Select() can also be used to delete a specific column, you can simply run the following code:
 
 ```{r,  eval=FALSE,echo=TRUE}
-select(df, -column name)
+select(df, -column_name)
 ```
 
 Lets try using the Borders data. 
@@ -384,9 +383,9 @@ Select the URI, Specialty and LengthOfStay columns, filter for rows which contai
 
 ```{r,  eval=FALSE,echo=TRUE}
 Borders %>%
-select(URI, Specialty, LengthOfStay) %>%
-filter(Specialty == "C8") %>%
- arrange(LengthOfStay)
+  select(URI, Specialty, LengthOfStay) %>%
+  filter(Specialty == "C8") %>%
+  arrange(LengthOfStay)
 ```
 
 
@@ -414,9 +413,9 @@ The summarise() function allows you to calculate counts and summary statistics f
 
 ```{r,  eval=FALSE,echo=TRUE}
 Borders %>%
-group_by(HospitalCode) %>%
-summarise(mean_LOS = mean(LengthOfStay)) %>%
-ungroup()
+  group_by(HospitalCode) %>%
+  summarise(mean_LOS = mean(LengthOfStay)) %>%
+  ungroup()
 ```
 
 ## Rename and Recode 
@@ -451,7 +450,7 @@ The dplyr package also makes it very easy to merge data by matching files togeth
 The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for an inner_join you would have: 
 
 ```{r,  eval=FALSE,echo=TRUE}
-inner_join(x = dataframe1, y = dataframe2, by = common variable)
+inner_join(x = dataframe1, y = dataframe2, by = "common_variable")
 ```
 
 ## Examples of Merges
@@ -477,7 +476,7 @@ inner_join(x = dataframe1, y = dataframe2, by = common variable)
 baby5 <- read_csv("Baby5.csv")
 baby6 <- read_csv("Baby6.csv")
 baby_joined <- baby5 %>%
-left_join(baby6)
+  left_join(baby6)
 
 ```
   
@@ -488,17 +487,18 @@ left_join(baby6)
 A basic line graph can be created using the following code:
 
 ```{r,  eval=FALSE,echo=TRUE}
-x = c(1, 3, 2, 4)
-Plot the data plot(x, type="l")
+x <- c(1, 3, 2, 4)
+# Plot the data
+plot(x, type = "l")
 ```
 
  Note that type = "l" simply means to plot a line plot(x, type="l")
 
 
 ```{r, echo=FALSE}
-x = c(1, 3, 2, 4)
-par(mar= c(10,4,4,2))
-plot(x, type="l")
+x <- c(1, 3, 2, 4)
+par(mar = c(10, 4, 4, 2))
+plot(x, type = "l")
 ```
 
 
@@ -529,8 +529,10 @@ It is possible to customise plots created in R.
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-barplot(counts, xlab = "Admission Day", ylab = "Number of Admissions",
-        main = "Distribution of Admission Day", col = "blue", space = 1)
+barplot(counts,
+  xlab = "Admission Day", ylab = "Number of Admissions",
+  main = "Distribution of Admission Day", col = "blue", space = 1
+)
 ```
 
 
