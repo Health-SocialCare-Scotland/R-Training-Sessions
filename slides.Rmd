@@ -21,8 +21,9 @@ table_contents <- data.frame(c("==", "!=",
                                ">", ">="),
                              c("Equal to", "Not equal to", "Less than", "Less than or equal to", "More than", "More than or equal to "))
 
-table_contents2 <- data.frame(c("And(&)", "OR(|)",
-                               "Not(!)"),
+table_contents2 <- data.frame(c("&", "|",
+                               "!"),
+                              c("AND","OR","NOT"),
                              c("Both relations must be true", "Either relation can be true", "Logical negation operator. Reverses the outcome of an expression"))
 
 
@@ -273,7 +274,7 @@ In addition to comparison operators, sometimes it is necessary to use logical op
 
 ```{r,  echo=FALSE}   
 kable(table_contents2,
-          col.names = c("Operator", "Definition"),
+          col.names = c("Operator","Text Equivalent", "Definition"),
           format = "markdown")
 ```
 
