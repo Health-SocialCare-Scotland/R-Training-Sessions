@@ -467,7 +467,7 @@ Borders %>%
 The dplyr package also makes it very straight forward to rename specific columns by using the rename() function respectively. The rename() function works as follows: 
 
 ```{r, eval=FALSE,echo=TRUE}
-df <- rename(df, new_code = existing_code)
+df <- rename(df, new_name = existing_name)
 ```
 
 ```{r, eval=FALSE,echo=TRUE}
@@ -499,7 +499,8 @@ Borders <- Borders %>%
 ## Joining Data 
 
 The dplyr package also makes it very easy to merge data by matching files together using common variables. There are several join functions within dplyr that are designed to merge dataframes together to create one dataframe containing the relevant variables.
-The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for an inner_join you would have: 
+
+The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for a left_join you would have: 
 
 ```{r,  eval=FALSE,echo=TRUE}
 left_join(x = dataframe1, y = dataframe2, by = "common_variable")

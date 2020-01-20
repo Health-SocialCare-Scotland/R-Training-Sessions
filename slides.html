@@ -476,7 +476,7 @@ library(dplyr)</pre>
 
 <p>The dplyr package also makes it very straight forward to rename specific columns by using the rename() function respectively. The rename() function works as follows:</p>
 
-<pre class = 'prettyprint lang-r'>df &lt;- rename(df, new_code = existing_code)</pre>
+<pre class = 'prettyprint lang-r'>df &lt;- rename(df, new_name = existing_name)</pre>
 
 <pre class = 'prettyprint lang-r'>Borders &lt;- rename(Borders, DateOfBirth = Dateofbirth)</pre>
 
@@ -501,7 +501,9 @@ library(dplyr)</pre>
 
 </article></slide><slide class=""><hgroup><h2>Joining Data</h2></hgroup><article  id="joining-data">
 
-<p>The dplyr package also makes it very easy to merge data by matching files together using common variables. There are several join functions within dplyr that are designed to merge dataframes together to create one dataframe containing the relevant variables. The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for an inner_join you would have:</p>
+<p>The dplyr package also makes it very easy to merge data by matching files together using common variables. There are several join functions within dplyr that are designed to merge dataframes together to create one dataframe containing the relevant variables.</p>
+
+<p>The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for a left_join you would have:</p>
 
 <pre class = 'prettyprint lang-r'>left_join(x = dataframe1, y = dataframe2, by = &quot;common_variable&quot;)</pre>
 
