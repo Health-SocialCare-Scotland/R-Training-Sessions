@@ -158,34 +158,24 @@ Read in the Borders excel data from
 
 
 
-## SMRA 
-
-Reading in data straight from SMRA is slightly more tricky. 
-
-
+## SMRA (for information only)
+Reading data from SMRA is slightly more tricky.
 ```{r,  eval=FALSE,echo=TRUE}
+install.packages("odbc") # One time install
 library(odbc)
-smra_connection <- dbConnect(
-  drv = odbc(),
-  dsn = "SMRA",
+# Set up a connection
+smra_connection <- dbConnect(drv = odbc(), dsn = "SMRA",
   uid = .rs.askForPassword("SMRA Username:"),
   pwd = .rs.askForPassword("SMRA Password:")
 )
-
-smr01 <- dbGetQuery(
-  smra_connection,
-  paste(
-    "select DISCHARGE_DATE, HBTREAT_CURRENTDATE,",
-    "LOCATION, MAIN_OPERATION",
+# Do the extract using SQL
+smr01 <- dbGetQuery(smra_connection,
+  paste("select DISCHARGE_DATE, LOCATION, MAIN_OPERATION",
     "from SMR01_PI",
-    "where ROWNUM <= 100"
-  )
+    "where ROWNUM <= 100")
 )
-head(smr01)
-
 ```
-Instructions on how to access using R to connect to SMRA can be found on the 
-[ISD WEBSITE](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
+Instructions on using R to connect to SMRA can be found on the [ISD WEBSITE](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
 
 
 

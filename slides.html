@@ -213,30 +213,25 @@ View(Borders)</pre>
 
 <p>*keep an eye out for a package being installed!</p>
 
-</article></slide><slide class=""><hgroup><h2>SMRA</h2></hgroup><article  id="smra">
+</article></slide><slide class=""><hgroup><h2>SMRA (for information only)</h2></hgroup><article  id="smra-for-information-only">
 
-<p>Reading in data straight from SMRA is slightly more tricky.</p>
+<p>Reading data from SMRA is slightly more tricky.</p>
 
-<pre class = 'prettyprint lang-r'>library(odbc)
-smra_connection &lt;- dbConnect(
-  drv = odbc(),
-  dsn = &quot;SMRA&quot;,
+<pre class = 'prettyprint lang-r'>install.packages(&quot;odbc&quot;) # One time install
+library(odbc)
+# Set up a connection
+smra_connection &lt;- dbConnect(drv = odbc(), dsn = &quot;SMRA&quot;,
   uid = .rs.askForPassword(&quot;SMRA Username:&quot;),
   pwd = .rs.askForPassword(&quot;SMRA Password:&quot;)
 )
-
-smr01 &lt;- dbGetQuery(
-  smra_connection,
-  paste(
-    &quot;select DISCHARGE_DATE, HBTREAT_CURRENTDATE,&quot;,
-    &quot;LOCATION, MAIN_OPERATION&quot;,
+# Do the extract using SQL
+smr01 &lt;- dbGetQuery(smra_connection,
+  paste(&quot;select DISCHARGE_DATE, LOCATION, MAIN_OPERATION&quot;,
     &quot;from SMR01_PI&quot;,
-    &quot;where ROWNUM &lt;= 100&quot;
-  )
-)
-head(smr01)</pre>
+    &quot;where ROWNUM &lt;= 100&quot;)
+)</pre>
 
-<p>Instructions on how to access using R to connect to SMRA can be found on the <a href='https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf' title=''>ISD WEBSITE</a></p>
+<p>Instructions on using R to connect to SMRA can be found on the <a href='https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf' title=''>ISD WEBSITE</a></p>
 
 </article></slide><slide class=""><hgroup><h2>Data Exploration - Data Frame</h2></hgroup><article  id="data-exploration---data-frame">
 
