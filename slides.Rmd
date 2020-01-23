@@ -30,6 +30,21 @@ table_contents2 <- data.frame(c("&", "|",
 ```
 
 
+## What will you learn today?
+
+- RStudio interface
+
+- Reading data into RStudio from multiple sources
+
+- Installing and using R packages
+
+- Manipulating data using R code
+
+- Exploring data using crosstabs and frequencies
+
+- Becoming familiar with the widely used dplyr package
+
+
 
 ## What is R?
 
@@ -109,7 +124,7 @@ Read in the Borders data from
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders <- read.csv("H:/R Training Data/Borders.csv")`
+Borders <- read.csv("H:/R Training Data/Borders.csv")
 ```
 
 
@@ -168,7 +183,7 @@ Instructions on using R to connect to SMRA can be found on the [ISD WEBSITE](htt
 
 
 
-## Data exploration - Data Frame 
+## Data Exploration - Data Frame 
 
 Let's do some data exploration :
 
@@ -185,26 +200,20 @@ We can check the number of rows and columns for the Borders dataframe
 dim(Borders)
 ```
 
-## Data exploration - Frequencies
-You can easily determine the frequencies of a specific column by using the `table(df$column)` command. The $ operator allows you to extract elements by name from a named list, i.e. take only values from a specific column in a given dataframe. 
+## Data Exploration
 
-Give it a try
+You can easily determine summary statistics of a specific column in R. For example, we can calculate the mean by using the `mean(df$column)` command. The $ operator allows you to extract elements by name from a named list, i.e. take only values from a specific column in a given dataframe. 
 
-
-```{r,  eval=FALSE,echo=TRUE}
-as.data.frame(table(Borders$Specialty))
-```
-
-In addition to basic frequencies, it is also possible to calculate the mean and median values (for a numeric column)
+In addition to the mean, it is also possible to calculate other statistics such as the median value and the range of values (for a numeric column)
 
 ```{r,  eval=FALSE,echo=TRUE}
 mean(df$column)
-
 median(df$column)
+range(df$column)
 ```
 
 
-## Exercise:
+## Exercise 1:
 
 - Read in the Borders.csv data and check the frequency on column 'Sex'. 
 
@@ -214,13 +223,11 @@ median(df$column)
 
 The table() function can also be used to create crosstabs from your data. Using the following code will give a crosstab for column1 and column2:
 
-
 ```{r,  eval=FALSE,echo=TRUE}
 table(df$column1, df$column2)
 ```
 
 Using our data:
-
 
 ```{r,  eval=FALSE,echo=TRUE}
 table(Borders$HospitalCode, Borders$Sex)
@@ -273,31 +280,30 @@ kable(table_contents2,
 
 ## Let's try using the operators 
 
-Using the Borders data
-
-Filter the Borders data Specialty = E12
+Using the Borders data, get all records with Specialty E12. We can use the filter() function to use only specific rows from the data frame. This works in a similar way to 'select if' in SPSS.
 
 ```{r,  eval=FALSE,echo=TRUE}
 Borders_E12 <- filter(Borders, Specialty == "E12")
 ```
 
-Filter the Borders data for Hospital is B120H and length of stay greater than 10.  
+Use filter() with the Borders data to get patients who attended hospital B120H and had a length of stay greater than 10.  
 
 
 ```{r,  eval=FALSE,echo=TRUE}
 Borders_filtered <- filter(Borders, 
-                           HospitalCode == "B120H" & LengthOfStay > 10)
+                           HospitalCode == "B120H" & 
+                           LengthOfStay > 10)
 
 ```
 
 
 
-## Exercise:
+## Exercise 2:
 
-- How many patients had a length of stay between 2 and 6 days in Borders General Hospital (B120H)?
+- How many patients had a length of stay between 2 and 6 days inclusive in Borders General Hospital (B120H)?
 
 
-## Mutate - a New Column 
+## mutate()
 
 Often there is a need to create a new column in a dataframe or modify an existing column The simplest way to do this is to use the mutate() function. 
 
@@ -319,9 +325,21 @@ Borders_2 <- mutate(Borders, LOS2 = LengthOfStay/2)
 
 ## Pipe Operator 
 
-While all the dplyr functions shown are useful on their own, there are times when we need to use more of them to achieve desired outputs. For this, dplyr contains the pipe operator, %>%. This operator works by linking the dplyr function together
+While all the dplyr functions shown are useful on their own, there are times when we need to use more of them to achieve desired outputs. For this, dplyr contains the pipe operator, %>%. This operator works by linking the dplyr function together. 
 
-For example 
+The pipe operator essentially means "and then". This makes reading your code much easier, as rather than having forcing several functions into one line of code, the pipe allows you to refer to your data frame and then perform several functions on it. 
+
+A common shortcut for the pipe operator is Ctrl + Shift + M
+
+## Pipe Operator 
+
+For example, if we wanted to get all records with HospitalCode "B102H" and sort by Dateofbirth we would have had to run this code:
+
+```{r,  eval=FALSE,echo=TRUE}
+arrange(filter(Borders, HospitalCode == "B102H"), Dateofbirth)
+```
+
+However, we can make this code much easier to read by introducing the pipe operator:
 
 ```{r,  eval=FALSE,echo=TRUE}
 Borders %>%
@@ -329,12 +347,9 @@ Borders %>%
   arrange(Dateofbirth)
 ```
 
-Note: There is no longer a need for dataframe as the first argument for example:
-```{r,  eval=FALSE,echo=TRUE}
-filter(Borders, HospitalCode == "B102H")
-```
+Note: There is no longer a need for dataframe as the first argument in each function as R knows you are referring to the Borders data frame
 
-## Arrange 
+## arrange()
 
 Data can also be sorted with dplyr using the arrange() function. Multiple columns can be selected and arrange() will sort the dataframe in the order the columns are selected. 
   
@@ -350,7 +365,8 @@ Using our data we can sort using the Hospital Code in ascending order:
 arrange(Borders, HospitalCode)
 ```
 
-## Select  
+## select()
+
 Sometimes you will only be interested in a few columns in your dataframe. The select() function allows you to specify certain columns from within your dataframe to select out. 
 
 
@@ -383,7 +399,7 @@ Borders %>%
 ```
 
 
-## Group by 
+## group_by() 
 
 The group_by() function allows you to easily aggregate your data into groups. This function simply list the desired columns you wish to group by within your dataframe. 
 
@@ -391,19 +407,23 @@ The group_by() function allows you to easily aggregate your data into groups. Th
 ```{r,  eval=FALSE,echo=TRUE}
 group_by(df, column_name)
 ```
-Using our data 
+Using our data:
 
 
 ```{r,  eval=FALSE,echo=TRUE}
 group_by(Borders, HospitalCode)
 ```
 
-As you can see, using the group_by function on its own doesn't affect the appearance of the data. 
+As you can see, using the group_by function on its own doesn't affect the appearance of the data. However, the output in the console now shows the number of groups within the data 
 
-## Summarise  
+```{r,  eval=FALSE,echo=TRUE}
+Groups: HospitalCode [48]
+```
 
-The summarise() function allows you to calculate counts and summary statistics for reach desired group. To use this function we trying an example using the Borders data,  using the code below we calculate the mean los for each hospital. 
 
+## summarise()  
+
+The summarise() function allows you to calculate summary statistics for each desired group. To use this function we trying an example using the Borders data, using the code below we calculate the mean length of stay for each hospital. 
 
 ```{r,  eval=FALSE,echo=TRUE}
 Borders %>%
@@ -412,54 +432,77 @@ Borders %>%
   ungroup()
 ```
 
-## Rename and Recode 
-
-The dplyr package also makes it very straight forward to rename or recode specific columns by using the rename() and recode() functions respectively. The rename() function works as follows: 
+If we run this code without group_by, then the output will be the mean length of stay across all the data.
 
 ```{r,  eval=FALSE,echo=TRUE}
-rename(df, new_code = existing_code)
-
-```{r,  eval=FALSE,echo=TRUE}
-rename(Borders, DateOfBirth = Dateofbirth)
-```
-
-While rename() changes the column name, recode() changes the values within the column. The recode() function is: 
-
-```{r,  eval=FALSE,echo=TRUE}
-recode(df$column name, existing_code = new_code)
-```
-
-```{r,  eval=FALSE,echo=TRUE}
-recode(Borders$location, "B120V" = "B120H")
+Borders %>%
+  summarise(mean_LOS = mean(LengthOfStay))
 ```
 
 
-## Exercise
+## count()
 
-- Select the URI, Specialty. and Dateofbirth columns from Borders data. Arrange the data in ascending order by Specialty. Use the filter function to count how many records have a missing Dateofbirth value.
+The count() function is very useful for running frequencies on a dataframe. This function automatically calls group_by() and produces counts for a specified column.
 
-## Merging Data 
+```{r,  eval=FALSE,echo=TRUE}
+Borders %>%
+  count(Sex)
+```
+
+You can also sort frequencies in descending order using count()
+
+```{r,  eval=FALSE,echo=TRUE}
+Borders %>%
+  count(Specialty, sort = TRUE)
+```
+
+## rename() 
+
+The dplyr package also makes it very straight forward to rename specific columns by using the rename() function respectively. The rename() function works as follows: 
+
+```{r, eval=FALSE,echo=TRUE}
+df <- rename(df, new_name = existing_name)
+```
+
+```{r, eval=FALSE,echo=TRUE}
+Borders <- rename(Borders, DateOfBirth = Dateofbirth)
+```
+
+If you look at your Borders dataframe, you will see that the Dateofbirth column is now called DateOfBirth. 
+
+## recode() 
+
+While rename() changes the column name, recode() changes the values within the column. The recode() function works best when used within a mutate(): 
+
+```{r,  eval=FALSE,echo=TRUE}
+df <- df %>% 
+  mutate(column_name = recode(column_name, 
+                              "existing_code" = "new_code"))
+```
+
+```{r,  eval=FALSE,echo=TRUE}
+Borders <- Borders %>% 
+  mutate(HospitalCode = recode(HospitalCode, "B120V" = "B120H"))
+```
+
+
+## Exercise 3
+
+- Select the URI, Specialty. and DateOfBirth columns from Borders data. Arrange the data in ascending order by Specialty. Use the filter function to count how many records have a missing Dateofbirth value.
+
+## Joining Data 
 
 The dplyr package also makes it very easy to merge data by matching files together using common variables. There are several join functions within dplyr that are designed to merge dataframes together to create one dataframe containing the relevant variables.
-The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for an inner_join you would have: 
+
+The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for a left_join you would have: 
 
 ```{r,  eval=FALSE,echo=TRUE}
-inner_join(x = dataframe1, y = dataframe2, by = "common_variable")
+left_join(x = dataframe1, y = dataframe2, by = "common_variable")
 ```
 
 ## Examples of Merges
 
-.	left_join(x, y) - join x and y, by keeping all rows in x and all columns in both x and y, and merging based on common variables
-
-.	right_join(x, y) - join x and y, by keeping all rows in y and all columns in both x and y, and merging based on common variables
-
-.	inner_join(x, y) - join x and y, by keeping all rows that exist in both x and y and all columns from both x and y
-
-.	full_join(x, y) - join x and y, by keeping all rows and columns from both x and y, and merging based on common variables
-
-.	anti_join(x, y) - select all rows in x that do not exist in y, keeping all columns from x
-
-
+![dplyr joining functions](images/dplyr_joins.PNG){ width=100%, height=100%}
 
 ## Example 
   
@@ -470,7 +513,7 @@ inner_join(x = dataframe1, y = dataframe2, by = "common_variable")
 baby5 <- read_csv("Baby5.csv")
 baby6 <- read_csv("Baby6.csv")
 baby_joined <- baby5 %>%
-  left_join(baby6)
+  left_join(baby6, by = c("FAMILYID", "DOB"))
 
 ```
   
@@ -530,7 +573,7 @@ barplot(counts,
 ```
 
 
-## Exercise
+## Exercise 4
 
 - Filter your data to select records with HospitalCode "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and save the plot to your H:/ drive as a PNG. Hint: Use hist() to create the histogram
 
@@ -540,6 +583,8 @@ barplot(counts,
 
 
 [PHI Intro to R in NSS](https://github.com/Health-SocialCare-Scotland/R-Resources/blob/master/Intro to R-NSS.md)
+
+[R Guidance for PHI](https://health-socialcare-scotland.github.io/R-Resources/R_Guidance_for_PHI.html)
 
 [https://dplyr.tidyverse.org/ ](https://dplyr.tidyverse.org/)
 
