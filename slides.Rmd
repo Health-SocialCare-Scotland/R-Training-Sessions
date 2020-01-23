@@ -168,6 +168,7 @@ smra_connection <- dbConnect(drv = odbc(), dsn = "SMRA",
   uid = .rs.askForPassword("SMRA Username:"),
   pwd = .rs.askForPassword("SMRA Password:")
 )
+
 # Do the extract using SQL
 smr01 <- dbGetQuery(smra_connection,
   paste("select DISCHARGE_DATE, LOCATION, MAIN_OPERATION",
