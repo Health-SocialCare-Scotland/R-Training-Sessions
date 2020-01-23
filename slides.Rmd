@@ -159,7 +159,10 @@ Read in the Borders excel data from
 
 
 ## SMRA (for information only)
+
 Reading data from SMRA is slightly more tricky.
+
+
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("odbc") # One time install
 library(odbc)
