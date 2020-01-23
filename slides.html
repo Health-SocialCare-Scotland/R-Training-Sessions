@@ -224,6 +224,7 @@ smra_connection &lt;- dbConnect(drv = odbc(), dsn = &quot;SMRA&quot;,
   uid = .rs.askForPassword(&quot;SMRA Username:&quot;),
   pwd = .rs.askForPassword(&quot;SMRA Password:&quot;)
 )
+
 # Do the extract using SQL
 smr01 &lt;- dbGetQuery(smra_connection,
   paste(&quot;select DISCHARGE_DATE, LOCATION, MAIN_OPERATION&quot;,
