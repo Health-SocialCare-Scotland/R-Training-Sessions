@@ -106,11 +106,17 @@ help(package = "stats")
 
 ## CSV
 
-
-A simple command will read in a CSV file
+You can use the readr package to read in CSV files. To do this, we first need to install and load the package.
 
 ```{r,  eval=FALSE,echo=TRUE}
-dataset <- read.csv("filepath and name")
+install.packages("readr")
+library(readr)
+```
+
+Once we have loaded the package, we can then use this simple command to read in our file
+
+```{r,  eval=FALSE,echo=TRUE}
+dataset <- read_csv("filepath and name")
 ```
 
 - An alternative is clicking on the Import Dataset from your global environment section. 
@@ -120,11 +126,16 @@ Let's try an example!
 
 ## EXAMPLE
 
-Read in the Borders data from 
-
+Load the readr package
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders <- read.csv("H:/R Training Data/Borders.csv")
+library(readr)
+```
+
+Read in the Borders data from 
+
+```{r,  eval=FALSE,echo=TRUE}
+Borders <- read_csv("data/Borders.csv")
 ```
 
 
@@ -136,7 +147,7 @@ A simple command will read in a SPSS file
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("haven")
 library(haven)
-Borders <- read_sav("filepath")
+Borders_SPSS <- read_sav("data/Borders.sav")
 View(Borders)
 
 ```
@@ -148,10 +159,7 @@ Let's try an example!
 
 ## EXAMPLE
 
-Read in the Borders excel data from 
-
-
-- H:/R Training Data 
+Read in the Borders excel data from your data folder.
 
 
 *keep an eye out for a package being installed! 
@@ -492,7 +500,7 @@ Borders <- Borders %>%
 
 ## Joining Data 
 
-The dplyr package also makes it very easy to merge data by matching files together using common variables. There are several join functions within dplyr that are designed to merge dataframes together to create one dataframe containing the relevant variables.
+The dplyr package also makes it very easy to join data by matching files together using common variables. There are several join functions within dplyr that are designed to merge dataframes together to create one dataframe containing the relevant variables.
 
 The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for a left_join you would have: 
 
@@ -500,9 +508,9 @@ The general structure of a join function is to specify the two dataframes used f
 left_join(x = dataframe1, y = dataframe2, by = "common_variable")
 ```
 
-## Examples of Merges
+## Examples of Joining Functions
 
-![dplyr joining functions](images/dplyr_joins.PNG){ width=100%, height=100%}
+![dplyr joining functions](images/dplyr_joins.png){ width=100%, height=100%}
 
 ## Example 
   
@@ -510,8 +518,8 @@ left_join(x = dataframe1, y = dataframe2, by = "common_variable")
   
 ```{r,  eval=FALSE,echo=TRUE}
   
-baby5 <- read_csv("Baby5.csv")
-baby6 <- read_csv("Baby6.csv")
+baby5 <- read_csv("data/Baby5.csv")
+baby6 <- read_csv("data/Baby6.csv")
 baby_joined <- baby5 %>%
   left_join(baby6, by = c("FAMILYID", "DOB"))
 
@@ -545,7 +553,7 @@ plot(x, type = "l")
 - Read in the Borders (inc Age) data
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders_age <- read.csv("Borders (inc Age).csv")
+Borders_age <- read_csv("data/Borders (inc Age).csv")
 ```
 
 - Calculate frequencies of admissionday
@@ -575,7 +583,7 @@ barplot(counts,
 
 ## Exercise 4
 
-- Filter your data to select records with HospitalCode "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and save the plot to your H:/ drive as a PNG. Hint: Use hist() to create the histogram
+- Filter your data to select records with HospitalCode "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and save the plot to your plots folder as a PNG. Hint: Use hist() to create the histogram
 
 
 

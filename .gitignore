@@ -2,3 +2,16 @@
 .Rhistory
 .RData
 .Ruserdata
+
+data/
+slides_files/
+
+# Common text files that may contain data #
+*.[cC][sS][vV]
+*.[tT][xX][tT]
+
+# Excel files #
+*.[xX][lL][sS][xX]
+
+# SPSS formats #
+*.[sS][aA][vV]
