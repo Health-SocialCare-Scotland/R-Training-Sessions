@@ -36,7 +36,7 @@ table_contents2 <- data.frame(c("&", "|",
 
 - Reading data into [RStudio](https://rstudio.com/) from multiple sources
 
-- Installing and using [R packages
+- Installing and using R packages
 
 - Manipulating data using [R](https://cran.r-project.org/) code
 
