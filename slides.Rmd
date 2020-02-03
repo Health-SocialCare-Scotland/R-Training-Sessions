@@ -94,19 +94,20 @@ Try typing:
 ```{r,  eval=FALSE, echo=TRUE}
 packageDescription("stats")
 help(package = "stats")
+?stats
 ```
 
 ## How to import and export data 
 
-- CSV
+- csv
 - Excel 
 - SPSS
 - SMRA
 
 
-## CSV
+## csv
 
-You can use the readr package to read in CSV files. To do this, we first need to install and load the package.
+You can use the `readr` package to read in csv files. To do this, we first need to install and load the package.
 
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("readr")
@@ -116,7 +117,7 @@ library(readr)
 Once we have loaded the package, we can then use this simple command to read in our file
 
 ```{r,  eval=FALSE,echo=TRUE}
-dataset <- read_csv("filepath and name")
+csv_data <- read_csv("path/file_name.csv")
 ```
 
 - An alternative is clicking on the Import Dataset from your global environment section. 
@@ -132,37 +133,45 @@ Load the `readr` package
 library(readr)
 ```
 
-Read in the `Borders` data from 
+Read in the `Borders.csv` data from 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders <- read_csv("data/Borders.csv")
+borders <- read_csv("data/Borders.csv")
+View(borders)
 ```
 
 
 ## SPSS
 
 
-A simple command will read in a SPSS file
+A package called `haven` provides a simple function to read in SPSS files (`.sav` or `.zsav`).
 
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("haven")
 library(haven)
-Borders_SPSS <- read_sav("data/Borders.sav")
-View(Borders)
-
+spss_data <- read_sav("path/file_name.sav")
 ```
 
-- An alternative is clicking on the Import Dataset from your global environment section similar to CSV. 
+- An alternative is clicking on the Import Dataset from your global environment section similar to csv. 
 
 
 Let's try an example! 
 
 ## EXAMPLE
 
-Read in the Borders excel data from your data folder.
+Load the `haven` package
 
+```{r,  eval=FALSE,echo=TRUE}
+library(haven)
+```
 
-*keep an eye out for a package being installed! 
+Read in the `Borders.sav` SPSS data
+
+```{r,  eval=FALSE,echo=TRUE}
+borders_spss <- read_sav("data/Borders.sav")
+View(borders_spss)
+```
+
 
 
 
@@ -187,25 +196,25 @@ smr01 <- dbGetQuery(smra_connection,
     "where ROWNUM <= 100")
 )
 ```
-Instructions on using R to connect to SMRA can be found on the [ISD WEBSITE](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
+Instructions on using R to connect to SMRA can be found on the [ISD Website](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
 
 
 
 ## Data Exploration - Data Frame 
 
-Let's do some data exploration :
+Let's do some data exploration.
 
-As a first step in this process, it is important to know the size of the dataframe. 
+As a first step, it is important to know the size of the dataframe. 
 
 
 ```{r,  eval=FALSE,echo=TRUE}
 dim(df)
 ```
-We can check the number of rows and columns for the Borders dataframe 
+We can check the number of rows and columns for the `borders` dataframe 
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-dim(Borders)
+dim(borders)
 ```
 
 ## Data Exploration
@@ -218,6 +227,8 @@ In addition to the mean, it is also possible to calculate other statistics such 
 mean(df$column)
 median(df$column)
 range(df$column)
+# For frequencies we can use table()
+table(df$column)
 ```
 
 
@@ -238,9 +249,10 @@ table(df$column1, df$column2)
 Using our data:
 
 ```{r,  eval=FALSE,echo=TRUE}
-table(Borders$HospitalCode, Borders$Sex)
+table(borders$HospitalCode, borders$Sex)
 
-addmargins(table(Borders$HospitalCode, Borders$Sex))
+ # Addmargins() will add extra row and column for totals
+addmargins(table(borders$HospitalCode, borders$Sex))
 ```
 
 
@@ -257,12 +269,12 @@ install.packages("dplyr")
 library(dplyr)
 ```
 
-
+Tidyverse packages such as `dplyr` use a consistent format with the full data set being the first argument e.g. `function(data, task)` we'll see why this is useful later, but generally it should make code more readable and consistent!
 
 
 ## Comparison Operators
 
-It is possible to selects rows (using the function filter) in a dataframe, the table below shows a selection of comparison operators that can be used. 
+It is possible to selects rows (using the function `filter()`, which we'll meet soon) in a dataframe, the table below shows a selection of comparison operators that can be used. 
 
 
 
@@ -276,8 +288,7 @@ It is possible to selects rows (using the function filter) in a dataframe, the t
 
 ## Logical Operators
 
-In addition to comparison operators, sometimes it is necessary to use logical operators. The table below  
-
+In addition to comparison operators, sometimes it is necessary to use logical operators.
 
 
 ```{r,  echo=FALSE}   
@@ -288,17 +299,17 @@ kable(table_contents2,
 
 ## Let's try using the operators 
 
-Using the `Borders data`, get all records with Specialty E12. We can use the `filter()` function to use only specific rows from the data frame. *(This works in a similar way to 'select if' in SPSS.)*
+Using the `borders` data, get all records with Specialty E12. We can use the `filter()` function to use only specific rows from the data frame. *(This works in a similar way to 'select if' in SPSS.)*
 
 ```{r,  eval=FALSE, echo=TRUE}
-Borders_E12 <- filter(Borders, Specialty == "E12")
+borders_E12 <- filter(borders, Specialty == "E12")
 ```
 
-Use `filter()` with the `Borders` data to get patients who attended hospital B120H and had a length of stay greater than 10.  
+Use `filter()` with the `borders` data to get patients who attended hospital B120H and had a length of stay greater than 10.  
 
 
 ```{r,  eval=FALSE, echo=TRUE}
-Borders_filtered <- filter(Borders, 
+borders_filtered <- filter(borders, 
                            HospitalCode == "B120H" & 
                            LengthOfStay > 10)
 
@@ -324,11 +335,25 @@ For example if we want to create `LengthOfStay` divided by 2.
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders_2 <- mutate(Borders, LOS2 = LengthOfStay/2)
+borders_2 <- mutate(borders, los_div_2 = LengthOfStay / 2)
 ```
 
 
+## arrange()
 
+Data can also be sorted with `dplyr` using the `arrange()` function. Multiple columns can be selected and `arrange()` will sort the dataframe in the order the columns are selected. 
+  
+
+```{r,  eval=FALSE,echo=TRUE}
+arrange(df, column1, column2, desc(column3))
+```
+
+We can sort our data into ascending order by `HospitalCode`
+
+
+```{r,  eval=FALSE,echo=TRUE}
+arrange(borders, HospitalCode)
+```
 
 
 ## Pipe Operator 
@@ -337,41 +362,26 @@ While all the dplyr functions shown are useful on their own, there are times whe
 
 The pipe operator essentially means "and then". This makes reading your code much easier, as rather than having forcing several functions into one line of code, the pipe allows you to refer to your data frame and then perform several functions on it. 
 
-A common shortcut for the pipe operator is Ctrl + Shift + M
+A common short cut for the pipe operator is "`Ctrl+Shift+M`".
 
 ## Pipe Operator 
 
 For example, if we wanted to get all records with `HospitalCode` "B102H" and sort by `Dateofbirth`, we would have had to run this code:
 
 ```{r,  eval=FALSE,echo=TRUE}
-arrange(filter(Borders, HospitalCode == "B102H"), Dateofbirth)
+arrange(filter(borders, HospitalCode == "B102H"), Dateofbirth)
 ```
 
 However, we can make this code much easier to read by introducing the pipe operator:
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>% # Take the Borders data frame AND THEN
-  filter(HospitalCode == "B102H") %>% #filter so only rows where HospitalCode is B102H AND THEN 
+borders %>% # Take the borders data frame AND THEN
+  filter(HospitalCode == "B102H") %>% # filter so only rows where HospitalCode is B102H AND THEN
   arrange(Dateofbirth) # sort the result by date of birth
 ```
 
-**Note**: There is no longer a need for dataframe as the first argument in each function as R knows you are referring to the Borders data frame
+**Note**: There is no longer a need for dataframe as the first argument in each function as R knows you are referring to the `borders` data frame
 
-## arrange()
-
-Data can also be sorted with dplyr using the arrange() function. Multiple columns can be selected and arrange() will sort the dataframe in the order the columns are selected. 
-  
-
-```{r,  eval=FALSE,echo=TRUE}
-arrange(df, column1, column2, desc(column3))
-```
-
-Using our data we can sort using the Hospital Code in ascending order:
-
-
-```{r,  eval=FALSE,echo=TRUE}
-arrange(Borders, HospitalCode)
-```
 
 ## select()
 
@@ -388,19 +398,19 @@ select(df, column_name)
 select(df, -column_name)
 ```
 
-Let's try using the `Borders` data. 
+Let's try using the `borders` data. 
 
 ```{r,  eval=FALSE,echo=TRUE}
-select(Borders, -Postcode)
+select(borders, -Postcode)
 ```
 
 ## Example 
 
-Select the `URI`, `Specialty` and `LengthOfStay` columns, filter for rows which contain C8 for Specialty and arrange by LengthOfStay.
+Select the `URI`, `Specialty` and `LengthOfStay` columns, filter for rows which contain C8 for `Specialty` and arrange by `LengthOfStay`.
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   select(URI, Specialty, LengthOfStay) %>%
   filter(Specialty == "C8") %>%
   arrange(LengthOfStay)
@@ -419,7 +429,7 @@ Using our data:
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-group_by(Borders, HospitalCode)
+group_by(borders, HospitalCode)
 ```
 
 As you can see, using the group_by function on its own doesn't affect the appearance of the data. However, the output in the console now shows the number of groups within the data 
@@ -431,20 +441,20 @@ Groups: HospitalCode [48]
 
 ## summarise()  
 
-The `summarise()` function allows you to calculate summary statistics for each desired group. To use this function we trying an example using the `Borders` data, using the code below we calculate the mean length of stay for each hospital. 
+The `summarise()` function allows you to calculate summary statistics for each desired group. To use this function we trying an example using the `borders` data, using the code below we calculate the mean length of stay for each hospital. 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   group_by(HospitalCode) %>%
-  summarise(mean_LOS = mean(LengthOfStay)) %>%
+  summarise(mean_los = mean(LengthOfStay)) %>%
   ungroup()
 ```
 
 If we run this code without `group_by()`, then the output will be the mean length of stay across all the data.
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
-  summarise(mean_LOS = mean(LengthOfStay))
+borders %>%
+  summarise(mean_los = mean(LengthOfStay))
 ```
 
 
@@ -453,16 +463,23 @@ Borders %>%
 The `count()` function is very useful for running frequencies on a dataframe. This function automatically calls `group_by()` and produces counts for a specified column.
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   count(Sex)
 ```
 
 You can also sort frequencies in descending order using `count()`
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   count(Specialty, sort = TRUE)
 ```
+
+## Exercise 3:
+
+- Work out the earliest (minimum) admission date and latest (maximum) discharge date for each specialty. 
+
+- Count the number of admission (frequencies) per hospital per specialty, using `count()`
+
 
 ## rename() 
 
@@ -473,10 +490,10 @@ df <- rename(df, new_name = existing_name)
 ```
 
 ```{r, eval=FALSE,echo=TRUE}
-Borders <- rename(Borders, DateOfBirth = Dateofbirth)
+borders <- rename(borders, date_of_birth = Dateofbirth)
 ```
 
-If you look at your `Borders` dataframe, you will see that the `Dateofbirth` column is now called `DateOfBirth`. 
+If you look at your `borders` dataframe, you will see that the `Dateofbirth` column is now called `date_of_birth`. 
 
 ## recode() 
 
@@ -489,14 +506,16 @@ df <- df %>%
 ```
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders <- Borders %>% 
+borders <- borders %>% 
   mutate(HospitalCode = recode(HospitalCode, "B120V" = "B120H"))
 ```
 
 
-## Exercise 3
+## Exercise 4:
 
-- Select the `URI`, `Specialty` and `DateOfBirth` columns from `Borders` data. Arrange the data in ascending order by `Specialty`. Use the filter function to work out how many records have a missing Dateofbirth value.
+- Select the `URI`, `Specialty` and `DateOfBirth` columns from `borders` data and save this into a new data frame. 
+- Arrange this new data frame in ascending order by `Specialty` and view it to see the results. 
+- Use the `filter` function to work out how many records have a missing `DateOfBirth` value.
 
 ## Joining Data 
 
@@ -505,7 +524,7 @@ The `dplyr` package also makes it very easy to merge data by matching files toge
 The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for a `left_join()` you would have: 
 
 ```{r,  eval=FALSE,echo=TRUE}
-left_join(x = dataframe1, y = dataframe2, by = "common_variable")
+left_join(df_1, df_2, by = "common_variable")
 ```
 
 ## Examples of Joining Functions
@@ -517,12 +536,11 @@ left_join(x = dataframe1, y = dataframe2, by = "common_variable")
 Read in `Baby5.csv` and `Baby6.csv`
   
 ```{r,  eval=FALSE,echo=TRUE}
-  
+
 baby5 <- read_csv("data/Baby5.csv")
 baby6 <- read_csv("data/Baby6.csv")
 baby_joined <- baby5 %>%
   left_join(baby6, by = c("FAMILYID", "DOB"))
-
 ```
   
 
@@ -537,7 +555,7 @@ x <- c(1, 3, 2, 4)
 plot(x, type = "l")
 ```
 
- Note that type = "l" simply means to plot a line `plot(x, type="l")`
+ Note that `type = "l"` simply means to plot a line.
 
 
 ```{r, echo=FALSE}
@@ -550,16 +568,16 @@ plot(x, type = "l")
 ## Example 
 
 
-- Read in the `Borders` (inc Age) data
+- Read in the `Borders (inc Age).csv` data
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders_age <- read_csv("data/Borders (inc Age).csv")
+borders_age <- read_csv("data/Borders (inc Age).csv")
 ```
 
 - Calculate frequencies of `admissionday`
 
 ```{r,  eval=FALSE,echo=TRUE}
-counts <- table(Borders_age$admissionday)
+counts <- table(borders_age$admissionday)
 barplot(counts)
 ```
 
@@ -569,21 +587,28 @@ barplot(counts)
 
 It is possible to customise plots created in R. 
 
-
 - Change the colour and width of the bars
 
+```{r,  eval=FALSE,echo=TRUE}
+barplot(counts, col = "blue", space = 1)
+```
+
+- Add titles
 
 ```{r,  eval=FALSE,echo=TRUE}
 barplot(counts,
-  xlab = "Admission Day", ylab = "Number of Admissions",
-  main = "Distribution of Admission Day", col = "blue", space = 1
+  xlab = "Admission Day", 
+  ylab = "Number of Admissions",
+  main = "Distribution of Admission Day"
 )
 ```
 
 
-## Exercise 4
+## Exercise 5:
 
-- Filter your data to select records with `HospitalCode` "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and save the plot to your H:/ drive as a PNG. Hint: Use `hist()` to create the histogram
+- Filter your data to select records with `HospitalCode` "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and manually save the plot to the plots folder as a PNG. 
+
+Hint: Use `hist()` to create the histogram
 
 
 
