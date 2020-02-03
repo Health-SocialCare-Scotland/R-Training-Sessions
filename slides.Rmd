@@ -268,7 +268,7 @@ install.packages("dplyr")
 library(dplyr)
 ```
 
-
+Tidyverse packages such as `dplyr` use a consitent format with the full data set being the first argument e.g. `function(data, task)` we'll see why this is useful later, but generally it should make code more readable and consistent!
 
 
 ## Comparison Operators
