@@ -116,7 +116,7 @@ library(readr)
 Once we have loaded the package, we can then use this simple command to read in our file
 
 ```{r,  eval=FALSE,echo=TRUE}
-dataset <- read_csv("path/file_name.csv")
+csv_data <- read_csv("path/file_name.csv")
 ```
 
 - An alternative is clicking on the Import Dataset from your global environment section. 
@@ -136,19 +136,19 @@ Read in the `Borders` data from
 
 ```{r,  eval=FALSE,echo=TRUE}
 borders <- read_csv("data/Borders.csv")
+View(borders)
 ```
 
 
 ## SPSS
 
 
-A simple command will read in a SPSS file
+A package called `haven` provides a simple function to read in SPSS files (`.sav` or `.zsav`).
 
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("haven")
 library(haven)
-borders_spss <- read_sav("data/Borders.sav")
-View(borders_spss)
+spss_data <- read_sav("path/file_name.sav")
 
 ```
 
@@ -159,10 +159,19 @@ Let's try an example!
 
 ## EXAMPLE
 
-Read in the Borders excel data from your data folder.
+Load the `haven` package
 
+```{r,  eval=FALSE,echo=TRUE}
+library(haven)
+```
 
-*keep an eye out for a package being installed! 
+Read in the `Borders` SPSS data
+
+```{r,  eval=FALSE,echo=TRUE}
+borders_spss <- read_sav("data/Borders.sav")
+View(borders_spss)
+```
+
 
 
 
