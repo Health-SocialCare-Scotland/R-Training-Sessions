@@ -1,27 +1,38 @@
 ---
 title: "Afternoon Exercises"
-output: word_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(readr)
+
+# read these files from the data folder
+# but don't include in output 
+
+# Read in PM_Borders1.csv
+
+PM_Borders1 <- read_csv("../data/PM_Borders1.csv")
+
+# Read in PM_Borders2.csv
+
+PM_Borders2 <- read_csv("../data/PM_Borders2.csv")
 ```
 
 1. Read in both PM_Borders1.csv and PM_Borders2.csv separately using `read_csv()`. Remember to load the `readr` package first.
 <br>
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, eval = FALSE}
 library(readr)
 
 # Read in PM_Borders1.csv
 
-PM_Borders1 <- read_csv("H:/R Training Data/PM_Borders1.csv")
+PM_Borders1 <- read_csv("data/PM_Borders1.csv")
 
 # Read in PM_Borders2.csv
 
-PM_Borders2 <- read_csv("H:/R Training Data/PM_Borders2.csv")
+PM_Borders2 <- read_csv("data/PM_Borders2.csv")
 ```
 
 <br>
@@ -34,6 +45,16 @@ PM_Borders2 <- read_csv("H:/R Training Data/PM_Borders2.csv")
 # Use full_join to merge these files
 
 joined_data <- full_join(PM_Borders1, PM_Borders2)
+
+# Show data
+
+joined_data
+
+# Compare dimensions
+
+dim(PM_Borders1)
+dim(PM_Borders2)
+dim(joined_data)
 ```
 
 <br>
@@ -50,16 +71,20 @@ table(joined_data$ManagementofPatient, joined_data$Specialty)
 
 <br>
 
-4. Take all records in `joined_data` which have `ManagementofPatient` values "Day Case in Inpatient Ward" or "Day Case in Day Bed Unit" and store them in a dataframe called `Q4_data`. Calculate a new column `LOS2` for `LengthOfStay` multiplied by two.
+4. Take all records in `joined_data` which have `ManagementofPatient` values "Day Case in Inpatient Ward" or "Day Case in Day Bed Unit" and store them in a dataframe called `day_cases`. Calculate a new column `LOS2` for `LengthOfStay` multiplied by two.
 
 <br>
 
 ```{r }
 # Use filter() to select values and mutate() to calculate LOS2
 
-Q4_data <- joined_data %>% 
+day_cases <- joined_data %>% 
   filter(ManagementofPatient == "Day Case in Inpatient Ward" | ManagementofPatient == "Day Case in Day Bed Unit") %>% 
   mutate(LOS2 = LengthOfStay * 2)
+
+# Show data
+
+day_cases %>% select(ManagementofPatient, LengthOfStay, LOS2)
 ```
 
 <br>
