@@ -116,7 +116,7 @@ library(readr)
 Once we have loaded the package, we can then use this simple command to read in our file
 
 ```{r,  eval=FALSE,echo=TRUE}
-dataset <- read_csv("filepath and name")
+dataset <- read_csv("path/file_name.csv")
 ```
 
 - An alternative is clicking on the Import Dataset from your global environment section. 
