@@ -274,7 +274,7 @@ Tidyverse packages such as `dplyr` use a consistent format with the full data se
 
 ## Comparison Operators
 
-It is possible to selects rows (using the function `filter()` which we'll meet soon) in a dataframe, the table below shows a selection of comparison operators that can be used. 
+It is possible to selects rows (using the function `filter()`, which we'll meet soon) in a dataframe, the table below shows a selection of comparison operators that can be used. 
 
 
 
@@ -362,7 +362,7 @@ While all the dplyr functions shown are useful on their own, there are times whe
 
 The pipe operator essentially means "and then". This makes reading your code much easier, as rather than having forcing several functions into one line of code, the pipe allows you to refer to your data frame and then perform several functions on it. 
 
-A common short cut for the pipe operator is `Ctrl + Shift + M`
+A common short cut for the pipe operator is "`Ctrl+Shift+M`".
 
 ## Pipe Operator 
 
@@ -476,7 +476,7 @@ borders %>%
 
 ## Exercise 3:
 
-- Work out the earliest (minimum) admission and latest (maximum) discharge dates for each specialty. 
+- Work out the earliest (minimum) admission date and latest (maximum) discharge date for each specialty. 
 
 - Count the number of admission (frequencies) per hospital per specialty, using `count()`
 
