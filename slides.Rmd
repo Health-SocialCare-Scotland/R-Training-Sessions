@@ -150,7 +150,6 @@ A package called `haven` provides a simple function to read in SPSS files (`.sav
 install.packages("haven")
 library(haven)
 spss_data <- read_sav("path/file_name.sav")
-
 ```
 
 - An alternative is clicking on the Import Dataset from your global environment section similar to csv. 
@@ -335,7 +334,7 @@ For example if we want to create `LengthOfStay` divided by 2.
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-borders_2 <- mutate(borders, los_div_2 = LengthOfStay/2)
+borders_2 <- mutate(borders, los_div_2 = LengthOfStay / 2)
 ```
 
 
@@ -376,7 +375,7 @@ However, we can make this code much easier to read by introducing the pipe opera
 
 ```{r,  eval=FALSE,echo=TRUE}
 borders %>% # Take the borders data frame AND THEN
-  filter(HospitalCode == "B102H") %>% #filter so only rows where HospitalCode is B102H AND THEN 
+  filter(HospitalCode == "B102H") %>% # filter so only rows where HospitalCode is B102H AND THEN
   arrange(Dateofbirth) # sort the result by date of birth
 ```
 
@@ -536,12 +535,11 @@ left_join(x = dataframe1, y = dataframe2, by = "common_variable")
 Read in `Baby5.csv` and `Baby6.csv`
   
 ```{r,  eval=FALSE,echo=TRUE}
-  
+
 baby5 <- read_csv("data/Baby5.csv")
 baby6 <- read_csv("data/Baby6.csv")
 baby_joined <- baby5 %>%
   left_join(baby6, by = c("FAMILYID", "DOB"))
-
 ```
   
 
