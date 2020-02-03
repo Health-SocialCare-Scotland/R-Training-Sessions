@@ -339,7 +339,21 @@ borders_2 <- mutate(borders, los_div_2 = LengthOfStay/2)
 ```
 
 
+## arrange()
 
+Data can also be sorted with dplyr using the arrange() function. Multiple columns can be selected and arrange() will sort the dataframe in the order the columns are selected. 
+  
+
+```{r,  eval=FALSE,echo=TRUE}
+arrange(df, column1, column2, desc(column3))
+```
+
+Using our data we can sort using the Hospital Code in ascending order:
+
+
+```{r,  eval=FALSE,echo=TRUE}
+arrange(borders, HospitalCode)
+```
 
 
 ## Pipe Operator 
@@ -368,21 +382,6 @@ borders %>% # Take the borders data frame AND THEN
 
 **Note**: There is no longer a need for dataframe as the first argument in each function as R knows you are referring to the `borders` data frame
 
-## arrange()
-
-Data can also be sorted with dplyr using the arrange() function. Multiple columns can be selected and arrange() will sort the dataframe in the order the columns are selected. 
-  
-
-```{r,  eval=FALSE,echo=TRUE}
-arrange(df, column1, column2, desc(column3))
-```
-
-Using our data we can sort using the Hospital Code in ascending order:
-
-
-```{r,  eval=FALSE,echo=TRUE}
-arrange(borders, HospitalCode)
-```
 
 ## select()
 
