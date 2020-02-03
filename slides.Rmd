@@ -524,7 +524,7 @@ The `dplyr` package also makes it very easy to merge data by matching files toge
 The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for a `left_join()` you would have: 
 
 ```{r,  eval=FALSE,echo=TRUE}
-left_join(x = dataframe1, y = dataframe2, by = "common_variable")
+left_join(df_1, df_2, by = "common_variable")
 ```
 
 ## Examples of Joining Functions
