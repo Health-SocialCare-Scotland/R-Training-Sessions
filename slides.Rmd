@@ -135,7 +135,7 @@ library(readr)
 Read in the `Borders` data from 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders <- read_csv("data/Borders.csv")
+borders <- read_csv("data/Borders.csv")
 ```
 
 
@@ -147,8 +147,8 @@ A simple command will read in a SPSS file
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("haven")
 library(haven)
-Borders_SPSS <- read_sav("data/Borders.sav")
-View(Borders)
+borders_spss <- read_sav("data/Borders.sav")
+View(borders_spss)
 
 ```
 
@@ -205,7 +205,7 @@ We can check the number of rows and columns for the Borders dataframe
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-dim(Borders)
+dim(borders)
 ```
 
 ## Data Exploration
@@ -238,9 +238,9 @@ table(df$column1, df$column2)
 Using our data:
 
 ```{r,  eval=FALSE,echo=TRUE}
-table(Borders$HospitalCode, Borders$Sex)
+table(borders$HospitalCode, borders$Sex)
 
-addmargins(table(Borders$HospitalCode, Borders$Sex))
+addmargins(table(borders$HospitalCode, borders$Sex))
 ```
 
 
@@ -288,17 +288,17 @@ kable(table_contents2,
 
 ## Let's try using the operators 
 
-Using the `Borders data`, get all records with Specialty E12. We can use the `filter()` function to use only specific rows from the data frame. *(This works in a similar way to 'select if' in SPSS.)*
+Using the `Borders` data, get all records with Specialty E12. We can use the `filter()` function to use only specific rows from the data frame. *(This works in a similar way to 'select if' in SPSS.)*
 
 ```{r,  eval=FALSE, echo=TRUE}
-Borders_E12 <- filter(Borders, Specialty == "E12")
+borders_E12 <- filter(borders, Specialty == "E12")
 ```
 
 Use `filter()` with the `Borders` data to get patients who attended hospital B120H and had a length of stay greater than 10.  
 
 
 ```{r,  eval=FALSE, echo=TRUE}
-Borders_filtered <- filter(Borders, 
+borders_filtered <- filter(borders, 
                            HospitalCode == "B120H" & 
                            LengthOfStay > 10)
 
@@ -324,7 +324,7 @@ For example if we want to create `LengthOfStay` divided by 2.
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders_2 <- mutate(Borders, LOS2 = LengthOfStay/2)
+borders_2 <- mutate(borders, los_div_2 = LengthOfStay/2)
 ```
 
 
@@ -344,18 +344,18 @@ A common shortcut for the pipe operator is Ctrl + Shift + M
 For example, if we wanted to get all records with `HospitalCode` "B102H" and sort by `Dateofbirth`, we would have had to run this code:
 
 ```{r,  eval=FALSE,echo=TRUE}
-arrange(filter(Borders, HospitalCode == "B102H"), Dateofbirth)
+arrange(filter(borders, HospitalCode == "B102H"), Dateofbirth)
 ```
 
 However, we can make this code much easier to read by introducing the pipe operator:
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>% # Take the Borders data frame AND THEN
+borders %>% # Take the borders data frame AND THEN
   filter(HospitalCode == "B102H") %>% #filter so only rows where HospitalCode is B102H AND THEN 
   arrange(Dateofbirth) # sort the result by date of birth
 ```
 
-**Note**: There is no longer a need for dataframe as the first argument in each function as R knows you are referring to the Borders data frame
+**Note**: There is no longer a need for dataframe as the first argument in each function as R knows you are referring to the `borders` data frame
 
 ## arrange()
 
@@ -370,7 +370,7 @@ Using our data we can sort using the Hospital Code in ascending order:
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-arrange(Borders, HospitalCode)
+arrange(borders, HospitalCode)
 ```
 
 ## select()
@@ -391,7 +391,7 @@ select(df, -column_name)
 Let's try using the `Borders` data. 
 
 ```{r,  eval=FALSE,echo=TRUE}
-select(Borders, -Postcode)
+select(borders, -Postcode)
 ```
 
 ## Example 
@@ -400,7 +400,7 @@ Select the `URI`, `Specialty` and `LengthOfStay` columns, filter for rows which 
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   select(URI, Specialty, LengthOfStay) %>%
   filter(Specialty == "C8") %>%
   arrange(LengthOfStay)
@@ -419,7 +419,7 @@ Using our data:
 
 
 ```{r,  eval=FALSE,echo=TRUE}
-group_by(Borders, HospitalCode)
+group_by(borders, HospitalCode)
 ```
 
 As you can see, using the group_by function on its own doesn't affect the appearance of the data. However, the output in the console now shows the number of groups within the data 
@@ -434,17 +434,17 @@ Groups: HospitalCode [48]
 The `summarise()` function allows you to calculate summary statistics for each desired group. To use this function we trying an example using the `Borders` data, using the code below we calculate the mean length of stay for each hospital. 
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   group_by(HospitalCode) %>%
-  summarise(mean_LOS = mean(LengthOfStay)) %>%
+  summarise(mean_los = mean(LengthOfStay)) %>%
   ungroup()
 ```
 
 If we run this code without `group_by()`, then the output will be the mean length of stay across all the data.
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
-  summarise(mean_LOS = mean(LengthOfStay))
+borders %>%
+  summarise(mean_los = mean(LengthOfStay))
 ```
 
 
@@ -453,14 +453,14 @@ Borders %>%
 The `count()` function is very useful for running frequencies on a dataframe. This function automatically calls `group_by()` and produces counts for a specified column.
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   count(Sex)
 ```
 
 You can also sort frequencies in descending order using `count()`
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders %>%
+borders %>%
   count(Specialty, sort = TRUE)
 ```
 
@@ -473,10 +473,10 @@ df <- rename(df, new_name = existing_name)
 ```
 
 ```{r, eval=FALSE,echo=TRUE}
-Borders <- rename(Borders, DateOfBirth = Dateofbirth)
+borders <- rename(borders, date_of_birth = Dateofbirth)
 ```
 
-If you look at your `Borders` dataframe, you will see that the `Dateofbirth` column is now called `DateOfBirth`. 
+If you look at your `Borders` dataframe, you will see that the `Dateofbirth` column is now called `date_of_birth`. 
 
 ## recode() 
 
@@ -489,7 +489,7 @@ df <- df %>%
 ```
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders <- Borders %>% 
+borders <- borders %>% 
   mutate(HospitalCode = recode(HospitalCode, "B120V" = "B120H"))
 ```
 
@@ -553,13 +553,13 @@ plot(x, type = "l")
 - Read in the `Borders` (inc Age) data
 
 ```{r,  eval=FALSE,echo=TRUE}
-Borders_age <- read_csv("data/Borders (inc Age).csv")
+borders_age <- read_csv("data/Borders (inc Age).csv")
 ```
 
 - Calculate frequencies of `admissionday`
 
 ```{r,  eval=FALSE,echo=TRUE}
-counts <- table(Borders_age$admissionday)
+counts <- table(borders_age$admissionday)
 barplot(counts)
 ```
 
