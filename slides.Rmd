@@ -587,21 +587,28 @@ barplot(counts)
 
 It is possible to customise plots created in R. 
 
-
 - Change the colour and width of the bars
 
+```{r,  eval=FALSE,echo=TRUE}
+barplot(counts, col = "blue", space = 1)
+```
+
+- Add titles
 
 ```{r,  eval=FALSE,echo=TRUE}
 barplot(counts,
-  xlab = "Admission Day", ylab = "Number of Admissions",
-  main = "Distribution of Admission Day", col = "blue", space = 1
+  xlab = "Admission Day", 
+  ylab = "Number of Admissions",
+  main = "Distribution of Admission Day"
 )
 ```
 
 
 ## Exercise 5:
 
-- Filter your data to select records with `HospitalCode` "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and save the plot to your H:/ drive as a PNG. Hint: Use `hist()` to create the histogram
+- Filter your data to select records with `HospitalCode` "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and manually save the plot to the plots folder as a PNG. 
+
+Hint: Use `hist()` to create the histogram
 
 
 
