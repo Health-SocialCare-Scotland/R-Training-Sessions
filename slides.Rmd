@@ -94,6 +94,7 @@ Try typing:
 ```{r,  eval=FALSE, echo=TRUE}
 packageDescription("stats")
 help(package = "stats")
+?stats
 ```
 
 ## How to import and export data 
