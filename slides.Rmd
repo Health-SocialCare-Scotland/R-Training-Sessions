@@ -227,6 +227,8 @@ In addition to the mean, it is also possible to calculate other statistics such 
 mean(df$column)
 median(df$column)
 range(df$column)
+# For frequencies we can use table()
+table(df$column)
 ```
 
 
