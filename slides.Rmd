@@ -474,6 +474,13 @@ borders %>%
   count(Specialty, sort = TRUE)
 ```
 
+## Exercise 3:
+
+- Work out the earliest (minimum) admission and latest (maximum) discharge dates for each specialty. 
+
+- Count the number of admission (frequencies) per hospital per specialty, using `count()`
+
+
 ## rename() 
 
 The `dplyr` package also makes it very straight forward to rename specific columns by using the `rename()` function respectively. The `rename()` function works as follows: 
@@ -504,7 +511,7 @@ borders <- borders %>%
 ```
 
 
-## Exercise 3
+## Exercise 4:
 
 - Select the `URI`, `Specialty` and `DateOfBirth` columns from `Borders` data. Arrange the data in ascending order by `Specialty`. Use the filter function to work out how many records have a missing Dateofbirth value.
 
@@ -591,7 +598,7 @@ barplot(counts,
 ```
 
 
-## Exercise 4
+## Exercise 5:
 
 - Filter your data to select records with `HospitalCode` "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and save the plot to your H:/ drive as a PNG. Hint: Use `hist()` to create the histogram
 
