@@ -513,7 +513,9 @@ borders <- borders %>%
 
 ## Exercise 4:
 
-- Select the `URI`, `Specialty` and `DateOfBirth` columns from `Borders` data. Arrange the data in ascending order by `Specialty`. Use the filter function to work out how many records have a missing Dateofbirth value.
+- Select the `URI`, `Specialty` and `DateOfBirth` columns from `Borders` data and save this into a new data frame. 
+- Arrange this new data frame in ascending order by `Specialty` and view it to see the results. 
+- Use the `filter` function to work out how many records have a missing `DateOfBirth` value.
 
 ## Joining Data 
 
