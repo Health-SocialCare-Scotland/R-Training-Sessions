@@ -61,14 +61,16 @@ useful functions in R
 
 **`library()`** - load an installed package - doesn't need quote marks - e.g. `library(dplyr)`
 
-object/variable type in R
--------------------------
+object/variable types in R
+--------------------------
 
-Note: you can test for many of these using `is.` (e.g. `is.character("abc")`, `is.factor(iris$Species)`)
+Note: you can test for many of these using `is.` (e.g. `is.character("abc")`, `is.factor(iris$Species)`, `is.numeric(123)`)
 
 **character** - used for text (strings, e.g. name) or numbers that should be treated as strings (e.g. CHI number, NHS number)
 
-**double** - stores numbers
+**integer** - numeric, stored as an integer (whole number) - denoted by "L" after the number (`class(1L)`)
+
+**double** - numeric, stored as double precision floating point number (`is.double(1)`). R will convert between integer and double as required (e.g in calculations)
 
 **date** - dates are stored as unambiguous format (YYYY-MM-DD)
 
@@ -76,7 +78,7 @@ Note: you can test for many of these using `is.` (e.g. `is.character("abc")`, `i
 
 **logical** - TRUE/FALSE
 
-**`NA`** - Not Available, used to represent missing values
+**NA** - Not Available, used to represent missing values
 
 data structures in R
 --------------------
@@ -87,8 +89,8 @@ Note: you can test for many of these structures using `is.` (e.g. `is.data.frame
 
 **dataframe** - most common way of storing data in R. Two dimensional (rows and columns) collection of elements, each variable must contain the same type of element (e.g numeric) but variables can be different from each other - e.g. one variable of dates, one of characters, one of logical.
 
-**tibble** - special `tidyverse` form of a dataframe, functionally very similar but has some improvements in e.g. printing (compare `iris` vs `as_tibble(iris)`). `read_csv()` will return a `tibble`, `read.csv()` from base R will return a `dataframe`
+**tibble** - special `tidyverse` form of a `dataframe`, functionally very similar but has some improvements in e.g. printing (compare `iris` vs `as_tibble(iris)`). `read_csv()` will return a `tibble`, `read.csv()` from base R will return a `data.frame`
 
-**list** - a vector, but very flexible as the elements can be anything, including other lists. `dataframes` are lists of equal length vectors.
+**list** - a vector, but very flexible as the elements can be anything, including other lists. A `dataframe` is a list consisting of equal-length vectors.
 
 **matrix** - two dimensional collection of elements, all of the same type (e.g. numeric)
