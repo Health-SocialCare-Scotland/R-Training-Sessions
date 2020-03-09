@@ -198,7 +198,12 @@ smr01 <- dbGetQuery(smra_connection,
 ```
 Instructions on using R to connect to SMRA can be found on the [ISD Website](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
 
+## exporting data
 
+very similar to reading in data e.g.
+
+- `readr::write_csv(object, "file_name.csv")`
+- `haven::write_sav(object, "file_name.sav")`
 
 ## Data Exploration - Data Frame 
 
