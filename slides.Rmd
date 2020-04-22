@@ -1,7 +1,7 @@
 ---
 title: "R training for beginners"
-subtitle: "22nd August 2019"
-author: 'Jade Carruthers, Calum Purdie and Tina Fu <br> Stats Gov Team  <br>'
+subtitle: "Version 1" 
+author: 'phs.transformingpublishing@nhs.net' 
 output:
   ioslides_presentation:
     css: my-theme.css
@@ -30,19 +30,21 @@ table_contents2 <- data.frame(c("&", "|",
 ```
 
 
-## What will you learn today?
+## What will you learn in this course?
+**Block 1**<br/>
+- RStudio interface <br/>
+- Installing and using R packages <br/>
+- Reading data into [RStudio](https://rstudio.com/) from multiple sources <br/>
 
-- RStudio interface
+**Block2** <br/>
+- Exploring data using crosstabs and frequencies <br/>
+- Manipulating data using [R](https://cran.r-project.org/) code <br/>
 
-- Reading data into [RStudio](https://rstudio.com/) from multiple sources
+**Block 3** <br/>
+- Becoming familiar with the widely used `dplyr` package <br/>
 
-- Installing and using R packages
-
-- Manipulating data using [R](https://cran.r-project.org/) code
-
-- Exploring data using crosstabs and frequencies
-
-- Becoming familiar with the widely used `dplyr` package
+**Block 4** <br/>
+- ggplot2 <br/>
 
 
 
@@ -54,53 +56,107 @@ table_contents2 <- data.frame(c("&", "|",
 
 - R is open source and free to use, and available for all major operating systems
 
+- It is part of the analytical strategy but R is not the only tool we can use
 
-## R or RStudio?
 
-RStudio is a free and open-source integrated development environment for R, a programming language for statistical computing and graphics. You cannot run RStudio without R.
+## Difference between R and RStudio?
 
+- RStudio is a free and open-source integrated development environment for R, a programming language for statistical computing and graphics. You cannot run RStudio without R.
 - RStudio is more flexible and powerful, and provides direct access to R code
 - Both are good for viewing data, neither is good for manually editing data
 - Use RStudio for any project that requires direct interaction with code and/or manipulation of complex data
+- RStudio Pro is proprietary and comes with user support from RStudio and some extra functionality like the use of RStudio server.
 
-## Functions and data embedded in R
 
-```{r,  eval=FALSE, echo=TRUE}
-summary(cars)
-```
-
-```{r}
-summary(cars)
-```
-
-## Easy to plot charts 
-
-```{r,  eval=FALSE, echo=TRUE}
-plot(cars)
-```
-
-```{r}
-plot(cars)
+## RStudio
+![RStudio](images/RStudio_Screenshot.png){ width=100%, height=100%}
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# Explain what each window does
+# Note that the console is for instantly executing a line of code and is different from the script
 ```
 
 
 ## R packages 
 
-Packages allow you to use R much more efficiently. Rather than simply relying on some basic R techniques, they build on some widely used R methods and often make complex tasks very straight forward. R packages cover a wide range of needs. 
+- R packages are collections of functions and, sometimes, datasets created by the R community. 
 
-Try typing:
+- R packages cover a wide range of needs and can improve the basic functionality of R or add additional functionality. 
 
+- Packages come with extensive helpfiles called vignettes. These contain information on all the functions in the package, a description of what the packaage is designed to do
 
-```{r,  eval=FALSE, echo=TRUE}
-packageDescription("stats")
-help(package = "stats")
-?stats
+- Link to package vignette - suggestions of a good one?
+
+## Installing packages
+
+- Packages are installed using:
+```{r, echo = TRUE, eval = FALSE}
+install.packages("haven")
 ```
 
+- Packages are called using:
+```{r, echo = TRUE, results = "hide"}
+library("haven")
+```
+ 
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# Explain the difference between installing and calling, a package is not a library)
+```
+
+- As anyone can create an R package, different packages can have functions of the same name. 
+
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# If you have loaded two packages that have a function of the same name, R uses the one from the package loaded last.
+```
+
+- We can specify which package a function should be from using ::
+```{r, echo = TRUE, eval = FALSE}
+dplyr::summarise()
+```
+
+
+## Data Frames and Objects
+**Data Frame** <br/>
+- A data frame is a table of information in which each column contains values of one variable and each row contains all the information on a single observation. 
+
+**Objects**<br/>
+- can't remember what we were going to put here? Any suggestions welcome!
+
+
+## Comparison Operators
+
+It is possible to select rows (using the function `filter()`, which we'll meet soon) in a dataframe, the table below shows a selection of comparison operators that can be used. 
+
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# Draw attention to == and not =)
+```
+
+```{r,  echo=FALSE}
+    kable(table_contents,
+          col.names = c("Operator", "Function"),
+          format = "markdown")
+```
+
+
+## Logical Operators
+
+In addition to comparison operators, sometimes it is necessary to use logical operators.
+
+```{r,  echo=FALSE}   
+kable(table_contents2,
+          col.names = c("Operator","Text Equivalent", "Definition"),
+          format = "markdown")
+```
+
+
 ## How to import and export data 
+You can import data of any type including but not limited to:
 
 - csv
-- Excel 
+- rds 
 - SPSS
 - SMRA
 
@@ -120,10 +176,9 @@ Once we have loaded the package, we can then use this simple command to read in 
 csv_data <- read_csv("path/file_name.csv")
 ```
 
-- An alternative is clicking on the Import Dataset from your global environment section. 
-
 
 Let's try an example! 
+
 
 ## EXAMPLE
 
@@ -143,7 +198,6 @@ View(borders)
 
 ## SPSS
 
-
 A package called `haven` provides a simple function to read in SPSS files (`.sav` or `.zsav`).
 
 ```{r,  eval=FALSE,echo=TRUE}
@@ -151,9 +205,6 @@ install.packages("haven")
 library(haven)
 spss_data <- read_sav("path/file_name.sav")
 ```
-
-- An alternative is clicking on the Import Dataset from your global environment section similar to csv. 
-
 
 Let's try an example! 
 
@@ -173,12 +224,28 @@ View(borders_spss)
 ```
 
 
+## Reading in data from a website
+
+- Data in any file format can be read in from a website by replacing the filepath with the data URL. 
+
+- For example to read in the Hospital Codes CSV from the open data website:
+```{r eval=FALSE, echo=TRUE, warning=FALSE}
+library(readr)
+
+hospital_codes <- read_csv(
+  "https://www.opendata.nhs.scot/dataset/
+  cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/
+  c698f450-eeed-41a0-88f7-c1e40a568acc/download/
+  current_nhs_hospitals_in_scotland_030320.csv")
+```
 
 
 ## SMRA (for information only)
-
 Reading data from SMRA is slightly more tricky.
-
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# Do this as an example? Would require temporary access to SMR01 if they don't have it already. 
+```
 
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("odbc") # One time install
@@ -188,7 +255,6 @@ smra_connection <- dbConnect(drv = odbc(), dsn = "SMRA",
   uid = .rs.askForPassword("SMRA Username:"),
   pwd = .rs.askForPassword("SMRA Password:")
 )
-
 # Do the extract using SQL
 smr01 <- dbGetQuery(smra_connection,
   paste("select DISCHARGE_DATE, LOCATION, MAIN_OPERATION",
@@ -198,58 +264,49 @@ smr01 <- dbGetQuery(smra_connection,
 ```
 Instructions on using R to connect to SMRA can be found on the [ISD Website](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
 
-## exporting data
 
-very similar to reading in data e.g.
-
-- `readr::write_csv(object, "file_name.csv")`
-- `haven::write_sav(object, "file_name.sav")`
-
-## Data Exploration - Data Frame 
-
-Let's do some data exploration.
-
-As a first step, it is important to know the size of the dataframe. 
+## END OF BLOCK 1
 
 
-```{r,  eval=FALSE,echo=TRUE}
-dim(df)
-```
-We can check the number of rows and columns for the `borders` dataframe 
+## START BLOCK 2
 
-
-```{r,  eval=FALSE,echo=TRUE}
-dim(borders)
-```
 
 ## Data Exploration
 
-You can easily determine summary statistics of a specific column in R. For example, we can calculate the mean by using the `mean(df$column)` command. The `$` operator allows you to extract elements by name from a named list, i.e. take only values from a specific column in a given dataframe. 
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# Draw attention to how you see the size of a df in environment - no need to use dim(df)
+```
 
-In addition to the mean, it is also possible to calculate other statistics such as the median value and the range of values (for a numeric column)
+- You can easily produce summary statistics in R.  For example, we can calculate the mean by using the `mean()` function. 
+
+- To reference a specific column in a dataframe, use the `$` operator e.g. `df$column`. You can use this to produce summary statistics of a specific column e.g. `mean(df$column)`.
+
+- In addition to the mean, it is also possible to calculate other statistics such as the median value and the range of values (for a numeric column). Use the `summary()` function to see all summary statistics at once. 
 
 ```{r,  eval=FALSE,echo=TRUE}
-mean(df$column)
-median(df$column)
-range(df$column)
-# For frequencies we can use table()
-table(df$column)
+summary(df$column)  
 ```
 
 
-## Exercise 1:
+## Data Exploration - Frequencies/Crosstabs
 
-- Read in the `Borders.csv` data and check the frequency on column `Sex`. 
+The `table()` function can be used to create frequencies and crosstabs from your data. Using the following code will give a frrequency table for column 1: 
 
-- Using the same dataset, what are the mean and median values for `LengthOfStay`?
+```{r,  eval=FALSE, echo=TRUE}
+table(df$column1)
+```
 
-## Data Exploration - Crosstabs
-
-The `table()` function can also be used to create crosstabs from your data. Using the following code will give a crosstab for column1 and column2:
+Using the following code will give a crosstab for column1 and column2:
 
 ```{r,  eval=FALSE, echo=TRUE}
 table(df$column1, df$column2)
 ```
+
+Let's try an example!
+
+
+## EXAMPLE 
 
 Using our data:
 
@@ -261,56 +318,42 @@ addmargins(table(borders$HospitalCode, borders$Sex))
 ```
 
 
+## Exercise 1:
+
+- Read in the `Borders.csv` data and check the frequency on column `Sex`. 
+
+- Using the same dataset, what are the mean and median values for `LengthOfStay`?
+
+
+## END BLOCK 2?
+
+
+## START BLOCK 3?
+
+
 ## Data Manipulation 
 
+- As an organisation we use the tidyverse suite of packages - this is industry best practice. 
 
-A very common way of manipulating data in R is by using the `dplyr` package. This package exists as part of a group of R packages known as the "tidyverse". The tidyverse is comprised of multiple packages, with each package designed to do their respective task very efficiently. 
+- The tidyverse is a collection of R packages for data exploration, manipulation and visualisation. The packages in the tidyverse use a consistent format and data structure which ensures they work well together and are simple to use. 
 
+- In tidyverse functions, the first argument is the dataset e.g. `function(data, task)` which makes the code more readable and consistent. 
 
-
+- Many useful tidyverse functions come from the dplyr package:
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("dplyr")
-
 library(dplyr)
-```
-
-Tidyverse packages such as `dplyr` use a consistent format with the full data set being the first argument e.g. `function(data, task)` we'll see why this is useful later, but generally it should make code more readable and consistent!
-
-
-## Comparison Operators
-
-It is possible to selects rows (using the function `filter()`, which we'll meet soon) in a dataframe, the table below shows a selection of comparison operators that can be used. 
-
-
-
-
-```{r,  echo=FALSE}
-    kable(table_contents,
-          col.names = c("Operator", "Function"),
-          format = "markdown")
-```
-
-
-## Logical Operators
-
-In addition to comparison operators, sometimes it is necessary to use logical operators.
-
-
-```{r,  echo=FALSE}   
-kable(table_contents2,
-          col.names = c("Operator","Text Equivalent", "Definition"),
-          format = "markdown")
 ```
 
 ## Let's try using the operators 
 
-Using the `borders` data, get all records with Specialty E12. We can use the `filter()` function to use only specific rows from the data frame. *(This works in a similar way to 'select if' in SPSS.)*
+Using the `borders` data, select all records with Specialty E12. We can use the `filter()` function to use only specific rows from the data frame. *(This works in a similar way to 'select if' in SPSS.)*
 
 ```{r,  eval=FALSE, echo=TRUE}
 borders_E12 <- filter(borders, Specialty == "E12")
 ```
 
-Use `filter()` with the `borders` data to get patients who attended hospital B120H and had a length of stay greater than 10.  
+Use `filter()` with the `borders` data to get patients who attended hospital B120H **and** had a length of stay greater than 10.  
 
 
 ```{r,  eval=FALSE, echo=TRUE}
@@ -321,7 +364,6 @@ borders_filtered <- filter(borders,
 ```
 
 
-
 ## Exercise 2:
 
 - How many patients had a length of stay between 2 and 6 days inclusive in Borders General Hospital (B120H)?
@@ -329,15 +371,13 @@ borders_filtered <- filter(borders,
 
 ## mutate()
 
-Often there is a need to create a new column in a dataframe or modify an existing column The simplest way to do this is to use the `mutate()` function. 
-
+Often there is a need to create a new column in a dataframe or modify an existing column. The simplest way to do this is to use the `mutate()` function. 
 
 ```{r,  eval=FALSE,echo=TRUE}
 mutate(df, newcolumn = expression)
 ```
 
 For example if we want to create `LengthOfStay` divided by 2. 
-
 
 ```{r,  eval=FALSE,echo=TRUE}
 borders_2 <- mutate(borders, los_div_2 = LengthOfStay / 2)
@@ -348,13 +388,11 @@ borders_2 <- mutate(borders, los_div_2 = LengthOfStay / 2)
 
 Data can also be sorted with `dplyr` using the `arrange()` function. Multiple columns can be selected and `arrange()` will sort the dataframe in the order the columns are selected. 
   
-
 ```{r,  eval=FALSE,echo=TRUE}
 arrange(df, column1, column2, desc(column3))
 ```
 
 We can sort our data into ascending order by `HospitalCode`
-
 
 ```{r,  eval=FALSE,echo=TRUE}
 arrange(borders, HospitalCode)
@@ -363,9 +401,9 @@ arrange(borders, HospitalCode)
 
 ## Pipe Operator 
 
-While all the dplyr functions shown are useful on their own, there are times when we need to use more of them to achieve desired outputs. For this, `dplyr` contains the pipe operator, `%>%`. This operator works by linking the `dplyr` function together. 
+While all the dplyr functions shown are useful on their own, there are times when we need to use more of them to achieve desired outputs. For this, `dplyr` contains the pipe operator, `%>%`. This operator works by linking the `dplyr` functions together. 
 
-The pipe operator essentially means "and then". This makes reading your code much easier, as rather than having forcing several functions into one line of code, the pipe allows you to refer to your data frame and then perform several functions on it. 
+The pipe operator essentially means "and then". This makes reading your code much easier, as rather than forcing several functions into one line of code, the pipe allows you to refer to your data frame and then perform several functions on it. 
 
 A common short cut for the pipe operator is "`Ctrl+Shift+M`".
 
@@ -385,13 +423,14 @@ borders %>% # Take the borders data frame AND THEN
   arrange(Dateofbirth) # sort the result by date of birth
 ```
 
-**Note**: There is no longer a need for dataframe as the first argument in each function as R knows you are referring to the `borders` data frame
+**Note**:
+Whatever precedes the pipe is automatically passed as the first argument to the next function. 
+Pipe can also be used with non dplyr functions. 
 
 
 ## select()
 
-Sometimes you will only be interested in a few columns in your dataframe. The `select()` function allows you to specify certain columns from within your dataframe to select out. 
-
+Sometimes you will only be interested in a few columns in your dataframe. The `select()` function allows you to specify certain columns from within your dataframe to keep. 
 
 ```{r,  eval=FALSE,echo=TRUE}
 select(df, column_name)
@@ -413,7 +452,6 @@ select(borders, -Postcode)
 
 Select the `URI`, `Specialty` and `LengthOfStay` columns, filter for rows which contain C8 for `Specialty` and arrange by `LengthOfStay`.
 
-
 ```{r,  eval=FALSE,echo=TRUE}
 borders %>%
   select(URI, Specialty, LengthOfStay) %>%
@@ -424,20 +462,19 @@ borders %>%
 
 ## group_by() 
 
-The `group_by()` function allows you to easily aggregate your data into groups. This function simply list the desired columns you wish to group by within your dataframe. 
-
+The `group_by()` function allows you to easily aggregate your data into groups. This function simply lists the desired columns you wish to group by within your dataframe. 
 
 ```{r,  eval=FALSE,echo=TRUE}
 group_by(df, column_name)
 ```
-Using our data:
 
+Using our data:
 
 ```{r,  eval=FALSE,echo=TRUE}
 group_by(borders, HospitalCode)
 ```
 
-As you can see, using the group_by function on its own doesn't affect the appearance of the data. However, the output in the console now shows the number of groups within the data 
+As you can see, using the group_by function on its own doesn't affect the appearance of the data. However, the output in the console now shows the number of groups within the data. 
 
 ```{r,  eval=FALSE,echo=TRUE}
 Groups: HospitalCode [48]
@@ -446,13 +483,12 @@ Groups: HospitalCode [48]
 
 ## summarise()  
 
-The `summarise()` function allows you to calculate summary statistics for each desired group. To use this function we trying an example using the `borders` data, using the code below we calculate the mean length of stay for each hospital. 
+The `summarise()` function allows you to calculate summary statistics for each desired group. To use this function let's try an example using the `borders` data, using the code below we calculate the mean length of stay for each hospital. 
 
 ```{r,  eval=FALSE,echo=TRUE}
 borders %>%
   group_by(HospitalCode) %>%
-  summarise(mean_los = mean(LengthOfStay)) %>%
-  ungroup()
+  summarise(mean_los = mean(LengthOfStay))
 ```
 
 If we run this code without `group_by()`, then the output will be the mean length of stay across all the data.
@@ -461,6 +497,10 @@ If we run this code without `group_by()`, then the output will be the mean lengt
 borders %>%
   summarise(mean_los = mean(LengthOfStay))
 ```
+
+
+## ungroup()
+We need an example here of using ungroup using the example data - happy for suggestions.
 
 
 ## count()
@@ -479,16 +519,17 @@ borders %>%
   count(Specialty, sort = TRUE)
 ```
 
+
 ## Exercise 3:
 
-- Work out the earliest (minimum) admission date and latest (maximum) discharge date for each specialty. 
+- Work out the earliest admission date and latest discharge date for each specialty. 
 
 - Count the number of admission (frequencies) per hospital per specialty, using `count()`
 
 
 ## rename() 
 
-The `dplyr` package also makes it very straight forward to rename specific columns by using the `rename()` function respectively. The `rename()` function works as follows: 
+The `dplyr` package also makes it very straight forward to rename specific columns by using the `rename()` function. The `rename()` function works as follows: 
 
 ```{r, eval=FALSE,echo=TRUE}
 df <- rename(df, new_name = existing_name)
@@ -499,6 +540,7 @@ borders <- rename(borders, date_of_birth = Dateofbirth)
 ```
 
 If you look at your `borders` dataframe, you will see that the `Dateofbirth` column is now called `date_of_birth`. 
+
 
 ## recode() 
 
@@ -520,7 +562,8 @@ borders <- borders %>%
 
 - Select the `URI`, `Specialty` and `DateOfBirth` columns from `borders` data and save this into a new data frame. 
 - Arrange this new data frame in ascending order by `Specialty` and view it to see the results. 
-- Use the `filter` function to work out how many records have a missing `DateOfBirth` value.
+- Use the `filter` function to extract records that have a missing `DateOfBirth` value. 
+
 
 ## Joining Data 
 
@@ -529,7 +572,7 @@ The `dplyr` package also makes it very easy to merge data by matching files toge
 The general structure of a join function is to specify the two dataframes used for merging, x and y, and a common variable to match by. For example, for a `left_join()` you would have: 
 
 ```{r,  eval=FALSE,echo=TRUE}
-left_join(df_1, df_2, by = "common_variable")
+new_data <- left_join(df_1, df_2, by = "common_variable")
 ```
 
 ## Examples of Joining Functions
@@ -547,45 +590,79 @@ baby6 <- read_csv("data/Baby6.csv")
 baby_joined <- baby5 %>%
   left_join(baby6, by = c("FAMILYID", "DOB"))
 ```
-  
 
 
-## Data Visulisation 
+## END BLOCK 3
+
+
+## END BLOCK 4
+
+
+## Data Visulisation - ggplot2
+
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# Maybe we need a slide here giving a bit of background to ggplot2? 
+```
 
 A basic line graph can be created using the following code:
 
 ```{r,  eval=FALSE,echo=TRUE}
+install.packages("ggplot2")
+library(ggplot2)
+
+#Define data
 x <- c(1, 3, 2, 4)
+y <- c(4, 8, 7, 11)
+
+# Create a data frame
+df <- as.data.frame(cbind(x, y))
+
 # Plot the data
-plot(x, type = "l")
-```
+line_plot <- ggplot(df, aes(x, y)) + 
+  geom_line() +
+  geom_point()
 
- Note that `type = "l"` simply means to plot a line.
-
-
-```{r, echo=FALSE}
-x <- c(1, 3, 2, 4)
-par(mar = c(10, 4, 4, 2))
-plot(x, type = "l")
+# View plot
+line_plot
 ```
 
 
-## Example 
-
+## Example - Barplot
 
 - Read in the `Borders (inc Age).csv` data
 
 ```{r,  eval=FALSE,echo=TRUE}
-borders_age <- read_csv("data/Borders (inc Age).csv")
+borders_age <- read_csv("data/BORDERS (inc Age).csv")
 ```
 
 - Calculate frequencies of `admissionday`
 
 ```{r,  eval=FALSE,echo=TRUE}
-counts <- table(borders_age$admissionday)
-barplot(counts)
+counts <- as.data.frame(table(borders_age$admissionday))
+colnames(counts) <- c("day", "count")
+
+# plot
+bar_plot <- ggplot(counts, aes(x = day, y = count)) +
+  geom_bar(stat = "identity")
+
+# View plot
+bar_plot
 ```
 
+
+## Example - Scatter plot
+
+Use the borders_age data:
+```{r,  eval=FALSE,echo=TRUE}
+# plot
+scatter_plot <- ggplot(borders_age, aes(x = ageonadmission, 
+                                        y = lengthofstay1)) +
+  geom_point()
+
+# View plot
+scatter_plot
+```
 
 
 ## Customising Plots 
@@ -595,17 +672,22 @@ It is possible to customise plots created in R.
 - Change the colour and width of the bars
 
 ```{r,  eval=FALSE,echo=TRUE}
-barplot(counts, col = "blue", space = 1)
+bar_plot <- ggplot(counts, aes(x = day, y = count)) +
+  geom_bar(stat = "identity", fill = "blue", width = 0.5)
+
+bar_plot
 ```
 
 - Add titles
 
 ```{r,  eval=FALSE,echo=TRUE}
-barplot(counts,
-  xlab = "Admission Day", 
-  ylab = "Number of Admissions",
-  main = "Distribution of Admission Day"
-)
+bar_plot <- ggplot(counts, aes(x = day, y = count)) +
+  geom_bar(stat = "identity") +
+  xlab("Admission Day") +
+  ylab("Number of Admissions") +
+  ggtitle("Distribution of Admission Day")
+
+bar_plot
 ```
 
 
@@ -613,12 +695,10 @@ barplot(counts,
 
 - Filter your data to select records with `HospitalCode` "B109H". Create a histogram for patient's length of stay. Add a title and axis labels and manually save the plot to the plots folder as a PNG. 
 
-Hint: Use `hist()` to create the histogram
-
+Hint: Use `geom_histogram()` to create the histogram
 
 
 ## Resources 
-
 
 [PHI Intro to R in NSS](https://github.com/Health-SocialCare-Scotland/R-Resources/blob/master/Intro to R-NSS.md)
 
@@ -632,13 +712,15 @@ Hint: Use `hist()` to create the histogram
 
 [Using R with SMRA](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
 
+[ggplot2 cheatsheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
 
 ## Contact 
 
-
 If you have questions or need help, you can contact
 
-PHI R User Group Inbox: <nss.Rusergroupinbox@nhs.net> (email here to be added to the distribution list)
+PHI R User Group Inbox: <nss.Rusergroupinbox@nhs.net> <br/>
+(email here to be added to the distribution list or Teams channel)
 
 PHI R User Group Distribution List: <nss.rusergp@nhs.net>
 
