@@ -31,40 +31,40 @@ table_contents2 <- data.frame(c("&", "|",
 
 
 ## What will you learn in this course?
-**Block 1**<br/>
+**Session 1** <br/>
 - RStudio interface <br/>
 - Installing and using R packages <br/>
 - Reading data into [RStudio](https://rstudio.com/) from multiple sources <br/>
 
-**Block2** <br/>
+**Session 2** <br/>
 - Exploring data using crosstabs and frequencies <br/>
 - Manipulating data using [R](https://cran.r-project.org/) code <br/>
 
-**Block 3** <br/>
+**Session 3** <br/>
 - Becoming familiar with the widely used `dplyr` package <br/>
 
-**Block 4** <br/>
+**Session 4** <br/>
 - ggplot2 <br/>
 
 
 
 ## What is R?
 
-- R is a language and environment for statistical computing and graphics
+- R is a language and environment for statistical computing and graphics.
 
-- Widely used across a variety of sectors for data analysis and statistical inference
+- Widely used across a variety of sectors for data analysis and statistical inference.
 
-- R is open source and free to use, and available for all major operating systems
+- R is open source and free to use, and available for all major operating systems.
 
-- It is part of the analytical strategy but R is not the only tool we can use
+- It is part of the analytical strategy but R is not the only tool we can use.
 
 
 ## Difference between R and RStudio?
 
-- RStudio is a free and open-source integrated development environment for R, a programming language for statistical computing and graphics. You cannot run RStudio without R.
-- RStudio is more flexible and powerful, and provides direct access to R code
-- Both are good for viewing data, neither is good for manually editing data
-- Use RStudio for any project that requires direct interaction with code and/or manipulation of complex data
+- RStudio is a free and open-source **integrated development environment** (IDE) for R, a programming language for statistical computing and graphics. You cannot run RStudio without R.
+- RStudio is more flexible and powerful, and provides direct access to R code.
+- Both are good for viewing data, neither is good for manually editing data.
+- Use RStudio for any project that requires direct interaction with code and/or manipulation of complex data.
 - RStudio Pro is proprietary and comes with user support from RStudio and some extra functionality like the use of RStudio server.
 
 
@@ -83,9 +83,10 @@ table_contents2 <- data.frame(c("&", "|",
 
 - R packages cover a wide range of needs and can improve the basic functionality of R or add additional functionality. 
 
-- Packages come with extensive helpfiles called vignettes. These contain information on all the functions in the package, a description of what the packaage is designed to do
+- Packages come with extensive helpfiles called vignettes. These contain information on all the functions in the package, a description of what the package is designed to do
 
-- Link to package vignette - suggestions of a good one?
+- [Vignette for the `lubridate` package](https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html)
+
 
 ## Installing packages
 
@@ -93,15 +94,15 @@ table_contents2 <- data.frame(c("&", "|",
 ```{r, echo = TRUE, eval = FALSE}
 install.packages("haven")
 ```
-
-- Packages are called using:
-```{r, echo = TRUE, results = "hide"}
+and are called using:
+```{r, echo = TRUE, warning = FALSE}
 library("haven")
 ```
  
 ```{r, echo = FALSE}
 # TRAINERS NOTES
-# Explain the difference between installing and calling, a package is not a library)
+# Explain the difference between installing and calling - a package is not a library
+# Also mention that packages usually only need to be installed once. 
 ```
 
 - As anyone can create an R package, different packages can have functions of the same name. 
@@ -113,42 +114,29 @@ library("haven")
 
 - We can specify which package a function should be from using ::
 ```{r, echo = TRUE, eval = FALSE}
-dplyr::summarise()
+dplyr::summarise() 
+# This calls the summarise function specifically from the dplyr package
 ```
 
 
 ## Data Frames and Objects
-**Data Frame** <br/>
-- A data frame is a table of information in which each column contains values of one variable and each row contains all the information on a single observation. 
-
 **Objects**<br/>
-- can't remember what we were going to put here? Any suggestions welcome!
-
-
-## Comparison Operators
-
-It is possible to select rows (using the function `filter()`, which we'll meet soon) in a dataframe, the table below shows a selection of comparison operators that can be used. 
-
+- Objects are things we can use in our R code, for example, a string containing a file path, a list of hospital codes or data in the form of a data frame.
+```{r, echo = TRUE, eval = FALSE}
+input <- "//conf/pub_incubator/"
+codes <- read.csv("hospitalcodes.csv")
+x <- 4
+```
 ```{r, echo = FALSE}
 # TRAINERS NOTES
-# Draw attention to == and not =)
+# Refer back to RStudio to show how it visually tracks objects
 ```
 
-```{r,  echo=FALSE}
-    kable(table_contents,
-          col.names = c("Operator", "Function"),
-          format = "markdown")
-```
-
-
-## Logical Operators
-
-In addition to comparison operators, sometimes it is necessary to use logical operators.
-
-```{r,  echo=FALSE}   
-kable(table_contents2,
-          col.names = c("Operator","Text Equivalent", "Definition"),
-          format = "markdown")
+**Data Frame** <br/>
+- A data frame is a table of information in which each column contains values of one variable and each row contains all the information on a single observation. 
+```{r, echo = TRUE, eval = FALSE}
+# Look at the iris dataset which is built into R
+iris <- iris
 ```
 
 
@@ -162,7 +150,6 @@ You can import data of any type including but not limited to:
 
 
 ## csv
-
 You can use the `readr` package to read in csv files. To do this, we first need to install and load the package.
 
 ```{r,  eval=FALSE,echo=TRUE}
@@ -176,6 +163,7 @@ Once we have loaded the package, we can then use this simple command to read in 
 csv_data <- read_csv("path/file_name.csv")
 ```
 
+The data is now stored as an object called `csv_data`. The `<-` operator is used to assign objects. 
 
 Let's try an example! 
 
@@ -233,10 +221,7 @@ View(borders_spss)
 library(readr)
 
 hospital_codes <- read_csv(
-  "https://www.opendata.nhs.scot/dataset/
-  cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/
-  c698f450-eeed-41a0-88f7-c1e40a568acc/download/
-  current_nhs_hospitals_in_scotland_030320.csv")
+  "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/c698f450-eeed-41a0-88f7-c1e40a568acc/download/current_nhs_hospitals_in_scotland_030320.csv")
 ```
 
 
@@ -262,7 +247,15 @@ smr01 <- dbGetQuery(smra_connection,
     "where ROWNUM <= 100")
 )
 ```
-Instructions on using R to connect to SMRA can be found on the [ISD Website](https://www.isdscotland.org/About-ISD/Methodologies/_docs/Using-R-with-SMRA-V1-1.pdf)
+
+
+## Exporting Data
+- Exporting data is very similar to importing data. 
+
+- To export as a CSV:
+```{r,  eval=FALSE,echo=TRUE}
+write_csv(borders, "data/borders.csv")
+```
 
 
 ## END OF BLOCK 1
@@ -291,16 +284,20 @@ summary(df$column)
 
 ## Data Exploration - Frequencies/Crosstabs
 
-The `table()` function can be used to create frequencies and crosstabs from your data. Using the following code will give a frrequency table for column 1: 
+The `table()` function can be used to create frequencies and crosstabs from your data. Using the following code will give a frequency table for column 1: 
 
 ```{r,  eval=FALSE, echo=TRUE}
 table(df$column1)
+# Create a table of Species from the iris dataset
+table(iris$Species)
 ```
 
 Using the following code will give a crosstab for column1 and column2:
 
 ```{r,  eval=FALSE, echo=TRUE}
 table(df$column1, df$column2)
+# Create a cross tab from the iris dataset
+table(iris$Sepal.Length , iris$Species)
 ```
 
 Let's try an example!
@@ -335,15 +332,43 @@ addmargins(table(borders$HospitalCode, borders$Sex))
 
 - As an organisation we use the tidyverse suite of packages - this is industry best practice. 
 
-- The tidyverse is a collection of R packages for data exploration, manipulation and visualisation. The packages in the tidyverse use a consistent format and data structure which ensures they work well together and are simple to use. 
+- The tidyverse is a collection of R packages for data exploration, manipulation and visualisation. Tidyverse packages use a consistent format and data structure making them simple to use. 
 
-- In tidyverse functions, the first argument is the dataset e.g. `function(data, task)` which makes the code more readable and consistent. 
+- In tidyverse functions, the first argument is the dataset e.g. `function(data, task)`.
 
 - Many useful tidyverse functions come from the dplyr package:
 ```{r,  eval=FALSE,echo=TRUE}
 install.packages("dplyr")
 library(dplyr)
 ```
+
+
+## Comparison Operators
+
+It is possible to select rows (using the function `filter()`, which we'll meet soon) in a dataframe, the table below shows a selection of comparison operators that can be used. 
+
+```{r, echo = FALSE}
+# TRAINERS NOTES
+# Draw attention to == and not =)
+```
+
+```{r,  echo=FALSE}
+    kable(table_contents,
+          col.names = c("Operator", "Function"),
+          format = "markdown")
+```
+
+
+## Logical Operators
+
+In addition to comparison operators, sometimes it is necessary to use logical operators.
+
+```{r,  echo=FALSE}   
+kable(table_contents2,
+          col.names = c("Operator","Text Equivalent", "Definition"),
+          format = "markdown")
+```
+
 
 ## Let's try using the operators 
 
@@ -368,6 +393,12 @@ borders_filtered <- filter(borders,
 
 - How many patients had a length of stay between 2 and 6 days inclusive in Borders General Hospital (B120H)?
 
+```{r, echo = FALSE, eval = FALSE}
+# TRAINERS NOTES
+# Demonstrate dplyr::between function once everyone has had a go themselves. 
+# Make sure library(dplyr) is loaded.
+borders_filtered <- borders %>% filter(between(LengthOfStay, 2, 6))
+```
 
 ## mutate()
 
@@ -418,14 +449,19 @@ arrange(filter(borders, HospitalCode == "B102H"), Dateofbirth)
 However, we can make this code much easier to read by introducing the pipe operator:
 
 ```{r,  eval=FALSE,echo=TRUE}
-borders %>% # Take the borders data frame AND THEN
-  filter(HospitalCode == "B102H") %>% # filter so only rows where HospitalCode is B102H AND THEN
-  arrange(Dateofbirth) # sort the result by date of birth
+# Take the borders data frame
+borders %>%
+# AND THEN filter so only rows where HospitalCode is B102H
+filter(HospitalCode == "B102H") %>% 
+# AND THEN sort the result by date of birth
+arrange(Dateofbirth) 
 ```
 
-**Note**:
-Whatever precedes the pipe is automatically passed as the first argument to the next function. 
-Pipe can also be used with non dplyr functions. 
+
+## Pipe Operator Notes
+- Whatever precedes the pipe is automatically passed as the first argument to the next function. 
+
+- Pipe can also be used with non dplyr functions. 
 
 
 ## select()
@@ -563,6 +599,7 @@ borders <- borders %>%
 - Select the `URI`, `Specialty` and `DateOfBirth` columns from `borders` data and save this into a new data frame. 
 - Arrange this new data frame in ascending order by `Specialty` and view it to see the results. 
 - Use the `filter` function to extract records that have a missing `DateOfBirth` value. 
+- Recode `Specialty` = "A1" to "General Medicine". 
 
 
 ## Joining Data 
@@ -595,7 +632,7 @@ baby_joined <- baby5 %>%
 ## END BLOCK 3
 
 
-## END BLOCK 4
+## START BLOCK 4
 
 
 ## Data Visulisation - ggplot2
@@ -606,24 +643,30 @@ baby_joined <- baby5 %>%
 ```
 
 A basic line graph can be created using the following code:
+```{r, echo=FALSE, error = FALSE, warning = FALSE, message = FALSE}
+install.packages("ggplot2", repos = "https://cran.ma.imperial.ac.uk/")
+install.packages("tibble", repos = "https://cran.ma.imperial.ac.uk/")
+```
 
-```{r,  eval=FALSE,echo=TRUE}
-install.packages("ggplot2")
+```{r,  eval=TRUE,echo=TRUE}
 library(ggplot2)
+library(tibble)
 
 #Define data
 x <- c(1, 3, 2, 4)
 y <- c(4, 8, 7, 11)
 
 # Create a data frame
-df <- as.data.frame(cbind(x, y))
-
+df <- tibble(x, y)
 # Plot the data
 line_plot <- ggplot(df, aes(x, y)) + 
   geom_line() +
   geom_point()
+```
 
-# View plot
+
+## View plot
+```{r, echo = TRUE, eval = TRUE}
 line_plot
 ```
 
@@ -639,12 +682,11 @@ borders_age <- read_csv("data/BORDERS (inc Age).csv")
 - Calculate frequencies of `admissionday`
 
 ```{r,  eval=FALSE,echo=TRUE}
-counts <- as.data.frame(table(borders_age$admissionday))
+counts <- count(borders_age, admissionday)
 colnames(counts) <- c("day", "count")
-
 # plot
-bar_plot <- ggplot(counts, aes(x = day, y = count)) +
-  geom_bar(stat = "identity")
+bar_plot <- ggplot(borders_age) +
+  geom_bar(aes(x = admissionday))
 
 # View plot
 bar_plot
@@ -672,8 +714,8 @@ It is possible to customise plots created in R.
 - Change the colour and width of the bars
 
 ```{r,  eval=FALSE,echo=TRUE}
-bar_plot <- ggplot(counts, aes(x = day, y = count)) +
-  geom_bar(stat = "identity", fill = "blue", width = 0.5)
+bar_plot <- ggplot(borders_age) +
+  geom_bar(aes(x = admissionday), fill = "blue", width = 0.5)
 
 bar_plot
 ```
@@ -681,8 +723,8 @@ bar_plot
 - Add titles
 
 ```{r,  eval=FALSE,echo=TRUE}
-bar_plot <- ggplot(counts, aes(x = day, y = count)) +
-  geom_bar(stat = "identity") +
+bar_plot <- ggplot(borders_age) +
+  geom_bar(aes(x = admissionday)) +
   xlab("Admission Day") +
   ylab("Number of Admissions") +
   ggtitle("Distribution of Admission Day")
@@ -719,11 +761,7 @@ Hint: Use `geom_histogram()` to create the histogram
 
 If you have questions or need help, you can contact
 
-PHI R User Group Inbox: <nss.Rusergroupinbox@nhs.net> <br/>
+PHI R User Group Inbox: <phs.rusergroupinbox@nhs.net> <br/>
 (email here to be added to the distribution list or Teams channel)
 
-PHI R User Group Distribution List: <nss.rusergp@nhs.net>
-
-
-
-# Thank You
+## Thank You
