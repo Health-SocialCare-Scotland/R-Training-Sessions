@@ -13,7 +13,7 @@ library(knitr)
 library(magrittr)
 library(kableExtra)
 
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 
 # Create data frame for table
 table_contents <- data.frame(c("==", "!=",
@@ -644,12 +644,8 @@ baby_joined <- baby5 %>%
 ```
 
 A basic line graph can be created using the following code:
-```{r, echo=FALSE, error = FALSE, warning = FALSE, message = FALSE}
-install.packages("ggplot2", repos = "https://cran.ma.imperial.ac.uk/")
-install.packages("tibble", repos = "https://cran.ma.imperial.ac.uk/")
-```
-
-```{r,  eval=TRUE,echo=TRUE}
+```{r,  eval=TRUE, echo=TRUE}
+# install.packages(c("ggplot2", "tibble"))
 library(ggplot2)
 library(tibble)
 
