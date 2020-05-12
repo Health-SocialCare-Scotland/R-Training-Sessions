@@ -673,7 +673,7 @@ line_plot
 
 ## Example - Barplot
 
-- Read in the `Borders (inc Age).csv` data
+- Read in the '`Borders (inc Age).csv`' data
 
 ```{r,  eval=FALSE,echo=TRUE}
 borders_age <- read_csv("data/BORDERS (inc Age).csv")
@@ -682,8 +682,10 @@ borders_age <- read_csv("data/BORDERS (inc Age).csv")
 - Calculate frequencies of `admissionday`
 
 ```{r,  eval=FALSE,echo=TRUE}
-counts <- count(borders_age, admissionday)
-colnames(counts) <- c("day", "count")
+counts <- borders_age %>%
+  count(admissionday) %>%
+  rename(day = admissionday, count = n)
+
 # plot
 bar_plot <- ggplot(borders_age) +
   geom_bar(aes(x = admissionday))
