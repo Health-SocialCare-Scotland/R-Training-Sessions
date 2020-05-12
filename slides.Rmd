@@ -660,7 +660,7 @@ line_plot <- ggplot(df, aes(x, y)) +
 ```
 
 
-## View plot
+## View the line plot
 ```{r, echo = TRUE, eval = TRUE}
 line_plot
 ```
@@ -669,19 +669,25 @@ line_plot
 ## Example - Barplot
 
 - Read in the '`Borders (inc Age).csv`' data
+```{r include = FALSE}
+library(readr)
+```
 
-```{r,  eval=FALSE,echo=TRUE}
+
+```{r, eval = TRUE, echo = TRUE, message = FALSE}
 borders_age <- read_csv("data/BORDERS (inc Age).csv")
 ```
 
 - Calculate frequencies of `admissionday`
 
-```{r,  eval=FALSE,echo=TRUE}
+```{r, eval=TRUE, echo=TRUE}
 # Create a plot
 bar_plot <- ggplot(borders_age) +
   geom_bar(aes(x = admissionday))
+```
 
-# View plot
+## View the bar plot
+```{r, echo = TRUE, eval = TRUE}
 bar_plot
 ```
 
@@ -689,13 +695,15 @@ bar_plot
 ## Example - Scatter plot
 
 Use the borders_age data:
-```{r,  eval=FALSE,echo=TRUE}
-# plot
+```{r, eval=TRUE, echo=TRUE}
+# Create a scatter plot
 scatter_plot <- ggplot(borders_age, aes(x = ageonadmission, 
                                         y = lengthofstay1)) +
   geom_point()
+```
 
-# View plot
+## View the bar plot
+```{r, echo = TRUE, eval = TRUE}
 scatter_plot
 ```
 
