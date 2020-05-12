@@ -536,10 +536,6 @@ borders %>%
 ```
 
 
-## ungroup()
-We need an example here of using ungroup using the example data - happy for suggestions.
-
-
 ## count()
 
 The `count()` function is very useful for running frequencies on a dataframe. This function automatically calls `group_by()` and produces counts for a specified column.
