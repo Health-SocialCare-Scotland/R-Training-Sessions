@@ -297,7 +297,7 @@ Using the following code will give a crosstab for column1 and column2:
 ```{r,  eval=FALSE, echo=TRUE}
 table(df$column1, df$column2)
 # Create a cross tab from the iris dataset
-table(iris$Sepal.Length , iris$Species)
+table(iris$Sepal.Length, iris$Species)
 ```
 
 Let's try an example!
@@ -310,7 +310,7 @@ Using our data:
 ```{r,  eval=FALSE,echo=TRUE}
 table(borders$HospitalCode, borders$Sex)
 
- # Addmargins() will add extra row and column for totals
+# Addmargins() will add extra row and column for totals
 addmargins(table(borders$HospitalCode, borders$Sex))
 ```
 
