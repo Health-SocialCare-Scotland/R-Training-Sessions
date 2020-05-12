@@ -44,7 +44,7 @@ table_contents2 <- data.frame(c("&", "|",
 - Becoming familiar with the widely used `dplyr` package <br/>
 
 **Session 4** <br/>
-- ggplot2 <br/>
+- Visualising data with ggplot2 <br/>
 
 
 
@@ -634,10 +634,12 @@ baby_joined <- baby5 %>%
 
 ## Data Visulisation - ggplot2
 
-```{r, echo = FALSE}
-# TRAINERS NOTES
-# Maybe we need a slide here giving a bit of background to ggplot2? 
-```
+- ggplot2 is a Tidyverse package for visualising data. Once you've learnt some basic ideas it's very easy to create simple plots and then start to customise them.
+
+- From the [ggplot2 reference](https://ggplot2.tidyverse.org/reference/): All ggplot2 plots begin with a call to `ggplot()`, supplying default data and aesthetic mappings, specified by `aes()`. You then add layers, scales, coords and facets with `+`.
+
+
+## Example - Line graph
 
 A basic line graph can be created using the following code:
 ```{r,  eval=TRUE, echo=TRUE}
