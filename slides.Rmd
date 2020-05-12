@@ -83,7 +83,7 @@ table_contents2 <- data.frame(c("&", "|",
 
 - R packages cover a wide range of needs and can improve the basic functionality of R or add additional functionality. 
 
-- Packages come with extensive helpfiles called vignettes. These contain information on all the functions in the package, a description of what the package is designed to do
+- Packages come with extensive help files called vignettes. These contain information on all the functions in the package, a description of what the package is designed to do
 
 - [Vignette for the `lubridate` package](https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html)
 
@@ -214,7 +214,7 @@ View(borders_spss)
 
 ## Reading in data from a website
 
-- Data in any file format can be read in from a website by replacing the filepath with the data URL. 
+- Data in any file format can be read in from a website by replacing the file path with the data URL. 
 
 - For example to read in the Hospital Codes CSV from the open data website:
 ```{r eval=FALSE, echo=TRUE, warning=FALSE}
