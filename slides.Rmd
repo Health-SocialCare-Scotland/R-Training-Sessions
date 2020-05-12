@@ -322,10 +322,10 @@ addmargins(table(borders$HospitalCode, borders$Sex))
 - Using the same dataset, what are the mean and median values for `LengthOfStay`?
 
 
-## END BLOCK 2?
+## END BLOCK 2
 
 
-## START BLOCK 3?
+## START BLOCK 3
 
 
 ## Data Manipulation 
