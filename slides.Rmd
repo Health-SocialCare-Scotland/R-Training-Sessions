@@ -13,7 +13,7 @@ library(knitr)
 library(magrittr)
 library(kableExtra)
 
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 
 # Create data frame for table
 table_contents <- data.frame(c("==", "!=",
@@ -44,7 +44,7 @@ table_contents2 <- data.frame(c("&", "|",
 - Becoming familiar with the widely used `dplyr` package <br/>
 
 **Session 4** <br/>
-- ggplot2 <br/>
+- Visualising data with ggplot2 <br/>
 
 
 
@@ -83,7 +83,7 @@ table_contents2 <- data.frame(c("&", "|",
 
 - R packages cover a wide range of needs and can improve the basic functionality of R or add additional functionality. 
 
-- Packages come with extensive helpfiles called vignettes. These contain information on all the functions in the package, a description of what the package is designed to do
+- Packages come with extensive help files called vignettes. These contain information on all the functions in the package, a description of what the package is designed to do
 
 - [Vignette for the `lubridate` package](https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html)
 
@@ -214,14 +214,15 @@ View(borders_spss)
 
 ## Reading in data from a website
 
-- Data in any file format can be read in from a website by replacing the filepath with the data URL. 
+- Data in any file format can be read in from a website by replacing the file path with the data URL. 
 
 - For example to read in the Hospital Codes CSV from the open data website:
 ```{r eval=FALSE, echo=TRUE, warning=FALSE}
 library(readr)
 
 hospital_codes <- read_csv(
-  "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/c698f450-eeed-41a0-88f7-c1e40a568acc/download/current_nhs_hospitals_in_scotland_030320.csv")
+  "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/c698f450-eeed-41a0-88f7-c1e40a568acc/download/current_nhs_hospitals_in_scotland_030320.csv"
+)
 ```
 
 
@@ -297,7 +298,7 @@ Using the following code will give a crosstab for column1 and column2:
 ```{r,  eval=FALSE, echo=TRUE}
 table(df$column1, df$column2)
 # Create a cross tab from the iris dataset
-table(iris$Sepal.Length , iris$Species)
+table(iris$Sepal.Length, iris$Species)
 ```
 
 Let's try an example!
@@ -310,7 +311,7 @@ Using our data:
 ```{r,  eval=FALSE,echo=TRUE}
 table(borders$HospitalCode, borders$Sex)
 
- # Addmargins() will add extra row and column for totals
+# Addmargins() will add extra row and column for totals
 addmargins(table(borders$HospitalCode, borders$Sex))
 ```
 
@@ -322,10 +323,10 @@ addmargins(table(borders$HospitalCode, borders$Sex))
 - Using the same dataset, what are the mean and median values for `LengthOfStay`?
 
 
-## END BLOCK 2?
+## END BLOCK 2
 
 
-## START BLOCK 3?
+## START BLOCK 3
 
 
 ## Data Manipulation 
@@ -349,7 +350,7 @@ It is possible to select rows (using the function `filter()`, which we'll meet s
 
 ```{r, echo = FALSE}
 # TRAINERS NOTES
-# Draw attention to == and not =)
+# Draw attention to == and not =
 ```
 
 ```{r,  echo=FALSE}
@@ -535,10 +536,6 @@ borders %>%
 ```
 
 
-## ungroup()
-We need an example here of using ungroup using the example data - happy for suggestions.
-
-
 ## count()
 
 The `count()` function is very useful for running frequencies on a dataframe. This function automatically calls `group_by()` and produces counts for a specified column.
@@ -637,27 +634,23 @@ baby_joined <- baby5 %>%
 
 ## Data Visulisation - ggplot2
 
-```{r, echo = FALSE}
-# TRAINERS NOTES
-# Maybe we need a slide here giving a bit of background to ggplot2? 
-```
+- ggplot2 is a Tidyverse package for visualising data. Once you've learnt some basic ideas it's very easy to create simple plots and then start to customise them.
+
+- From the [ggplot2 reference](https://ggplot2.tidyverse.org/reference/): All ggplot2 plots begin with a call to `ggplot()`, supplying default data and aesthetic mappings, specified by `aes()`. You then add layers, scales, coords and facets with `+`.
+
+
+## Example - Line graph
 
 A basic line graph can be created using the following code:
-```{r, echo=FALSE, error = FALSE, warning = FALSE, message = FALSE}
-install.packages("ggplot2", repos = "https://cran.ma.imperial.ac.uk/")
-install.packages("tibble", repos = "https://cran.ma.imperial.ac.uk/")
-```
-
-```{r,  eval=TRUE,echo=TRUE}
+```{r,  eval=TRUE, echo=TRUE}
+# install.packages(c("ggplot2", "tibble"))
 library(ggplot2)
 library(tibble)
 
-#Define data
-x <- c(1, 3, 2, 4)
-y <- c(4, 8, 7, 11)
+# Define data
+df <- tibble(x = c(1, 3, 2, 4), 
+             y = c(4, 8, 7, 11))
 
-# Create a data frame
-df <- tibble(x, y)
 # Plot the data
 line_plot <- ggplot(df, aes(x, y)) + 
   geom_line() +
@@ -665,7 +658,7 @@ line_plot <- ggplot(df, aes(x, y)) +
 ```
 
 
-## View plot
+## View the line plot
 ```{r, echo = TRUE, eval = TRUE}
 line_plot
 ```
@@ -673,22 +666,26 @@ line_plot
 
 ## Example - Barplot
 
-- Read in the `Borders (inc Age).csv` data
+- Read in the '`Borders (inc Age).csv`' data
+```{r include = FALSE}
+library(readr)
+```
 
-```{r,  eval=FALSE,echo=TRUE}
+
+```{r, eval = TRUE, echo = TRUE, message = FALSE}
 borders_age <- read_csv("data/BORDERS (inc Age).csv")
 ```
 
 - Calculate frequencies of `admissionday`
 
-```{r,  eval=FALSE,echo=TRUE}
-counts <- count(borders_age, admissionday)
-colnames(counts) <- c("day", "count")
-# plot
+```{r, eval=TRUE, echo=TRUE}
+# Create a plot
 bar_plot <- ggplot(borders_age) +
   geom_bar(aes(x = admissionday))
+```
 
-# View plot
+## View the bar plot
+```{r, echo = TRUE, eval = TRUE}
 bar_plot
 ```
 
@@ -696,13 +693,15 @@ bar_plot
 ## Example - Scatter plot
 
 Use the borders_age data:
-```{r,  eval=FALSE,echo=TRUE}
-# plot
+```{r, eval=TRUE, echo=TRUE}
+# Create a scatter plot
 scatter_plot <- ggplot(borders_age, aes(x = ageonadmission, 
                                         y = lengthofstay1)) +
   geom_point()
+```
 
-# View plot
+## View the bar plot
+```{r, echo = TRUE, eval = TRUE}
 scatter_plot
 ```
 
